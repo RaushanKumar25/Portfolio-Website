@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Raushan Kumar – Cloud Engineer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+  <canvas id="hero-canvas"></canvas>
+  <div class="noise"></div>
+  <div class="glow-orb glow-orb-1"></div>
+  <div class="glow-orb glow-orb-2"></div>
+  <div class="glow-orb glow-orb-3"></div>
+
+  <section class="hero" id="home">
+    <div class="hero-inner">
+
+      <!-- LEFT: TEXT -->
+      <div class="hero-text">
+
+        <div class="greeting-badge">
+          <div class="avatar-dot">👨‍💻</div>
+          <span>Available for Opportunities</span>
+          <div class="pulse-ring"></div>
+        </div>
+
+        <p class="hero-hi">Hi, I'm</p>
+        <h1 class="hero-name">
+          <span class="first">Raushan </span><br>
+          <span class="last">Kumar</span>
+        </h1>
+
+        <div class="hero-role-wrap">
+          <span class="role-prefix">I'm a</span>
+          <div class="typing-wrap">
+            <span class="typing-text" id="typing-el"></span>
+            <span class="cursor"></span>
+          </div>
+        </div>
+
+        <p class="hero-bio">
+          A passionate B.Tech 3rd year Computer Science student with a minor in Cloud Computing.
+          I enjoy building modern web applications, learning cloud technologies, and solving complex problems.
+        </p>
+
+        <div class="location-chip">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
+            <circle cx="12" cy="9" r="2.5"/>
+          </svg>
+          Phagwara, Punjab, India
+        </div>
+
+        <div class="hero-cta">
+          <a href="#projects" class="btn-primary">
+            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/>
+              <path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/>
+            </svg>
+            View Projects
+          </a>
+          <a href="mailto:raushankumarbhardwaj4510@gmail.com" class="btn-secondary">
+            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+              <polyline points="22,6 12,13 2,6"/>
+            </svg>
+            Contact Me
+          </a>
+        </div>
+
+        <div class="hero-socials">
+          <span class="socials-label">Find me on</span>
+          <div class="social-divider"></div>
+          <a href="https://github.com/RaushanKumar25" target="_blank" rel="noopener" class="social-link github" title="GitHub">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+            </svg>
+          </a>
+          <a href="https://www.linkedin.com/in/raushan-kumar-evaboot7/" target="_blank" rel="noopener" class="social-link linkedin" title="LinkedIn">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/>
+              <circle cx="4" cy="4" r="2"/>
+            </svg>
+          </a>
+          <a href="mailto:raushankumarbhardwaj4510@gmail.com" class="social-link email" title="Email">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+              <polyline points="22,6 12,13 2,6"/>
+            </svg>
+          </a>
+        </div>
+
+      </div>
+
+      <!-- RIGHT: PROFILE -->
+      <div class="hero-profile">
+        <div class="profile-orbit-wrap">
+          <div class="orbit-ring"></div>
+          <div class="orbit-ring orbit-ring-2"></div>
+          <div class="orbit-dot"></div>
+          <div class="orbit-dot orbit-dot-2"></div>
+
+          <div style="position:relative;">
+            <div class="profile-frame">
+              <div class="profile-inner">
+                <svg viewBox="0 0 280 280" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
+                  <defs>
+                    <radialGradient id="bgGrad" cx="50%" cy="50%" r="50%">
+                      <stop offset="0%" stop-color="#0d1627"/><stop offset="100%" stop-color="#070b12"/>
+                    </radialGradient>
+                    <linearGradient id="skinGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                      <stop offset="0%" stop-color="#FDBCB4"/><stop offset="100%" stop-color="#E8956D"/>
+                    </linearGradient>
+                    <linearGradient id="shirtGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stop-color="#1e3a5f"/><stop offset="100%" stop-color="#0f2040"/>
+                    </linearGradient>
+                    <linearGradient id="screenGrad2" x1="0%" y1="0%" x2="0%" y2="100%">
+                      <stop offset="0%" stop-color="#0d1627"/><stop offset="100%" stop-color="#060d1a"/>
+                    </linearGradient>
+                    <filter id="glow2">
+                      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+                      <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+                    </filter>
+                  </defs>
+                  <rect width="280" height="280" fill="url(#bgGrad)"/>
+                  <g opacity="0.06" stroke="#4af0c4" stroke-width=".5">
+                    <line x1="0" y1="40" x2="280" y2="40"/><line x1="0" y1="80" x2="280" y2="80"/>
+                    <line x1="0" y1="120" x2="280" y2="120"/><line x1="0" y1="160" x2="280" y2="160"/>
+                    <line x1="0" y1="200" x2="280" y2="200"/><line x1="0" y1="240" x2="280" y2="240"/>
+                    <line x1="40" y1="0" x2="40" y2="280"/><line x1="80" y1="0" x2="80" y2="280"/>
+                    <line x1="120" y1="0" x2="120" y2="280"/><line x1="160" y1="0" x2="160" y2="280"/>
+                    <line x1="200" y1="0" x2="200" y2="280"/><line x1="240" y1="0" x2="240" y2="280"/>
+                  </g>
+                  <rect x="50" y="180" width="180" height="10" rx="3" fill="#1a2540"/>
+                  <rect x="60" y="130" width="160" height="52" rx="8" fill="#1a2540"/>
+                  <rect x="65" y="135" width="150" height="42" rx="5" fill="url(#screenGrad2)"/>
+                  <g filter="url(#glow2)">
+                    <rect x="70" y="140" width="60" height="3" rx="1.5" fill="#4af0c4" opacity=".9"/>
+                    <rect x="74" y="147" width="40" height="3" rx="1.5" fill="#3b82f6" opacity=".8"/>
+                    <rect x="78" y="154" width="50" height="3" rx="1.5" fill="#a78bfa" opacity=".8"/>
+                    <rect x="74" y="161" width="35" height="3" rx="1.5" fill="#3b82f6" opacity=".7"/>
+                    <rect x="70" y="168" width="55" height="3" rx="1.5" fill="#4af0c4" opacity=".9"/>
+                  </g>
+                  <ellipse cx="140" cy="248" rx="58" ry="45" fill="url(#shirtGrad)"/>
+                  <path d="M122 200 L140 215 L158 200" stroke="#4af0c4" stroke-width="1.5" fill="none" opacity=".4"/>
+                  <rect x="131" y="185" width="18" height="20" rx="6" fill="url(#skinGrad)"/>
+                  <ellipse cx="140" cy="170" rx="34" ry="36" fill="url(#skinGrad)"/>
+                  <path d="M106 160 Q108 130 140 128 Q172 130 174 160 Q168 148 160 145 Q150 138 140 138 Q130 138 120 145 Q112 148 106 160Z" fill="#1a0a00"/>
+                  <ellipse cx="106" cy="170" rx="5" ry="7" fill="url(#skinGrad)"/>
+                  <ellipse cx="174" cy="170" rx="5" ry="7" fill="url(#skinGrad)"/>
+                  <ellipse cx="128" cy="168" rx="6" ry="7" fill="white"/>
+                  <ellipse cx="152" cy="168" rx="6" ry="7" fill="white"/>
+                  <ellipse cx="130" cy="169" rx="4" ry="4.5" fill="#2d1b00"/>
+                  <ellipse cx="154" cy="169" rx="4" ry="4.5" fill="#2d1b00"/>
+                  <circle cx="131.5" cy="167" r="1.5" fill="white"/>
+                  <circle cx="155.5" cy="167" r="1.5" fill="white"/>
+                  <path d="M121 161 Q128 158 135 161" stroke="#1a0a00" stroke-width="2" fill="none" stroke-linecap="round"/>
+                  <path d="M145 161 Q152 158 159 161" stroke="#1a0a00" stroke-width="2" fill="none" stroke-linecap="round"/>
+                  <path d="M132 180 Q140 186 148 180" stroke="#c97c5a" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+                  <rect x="120" y="163" width="18" height="13" rx="5" stroke="#4af0c4" stroke-width="1.5" fill="rgba(74,240,196,0.06)"/>
+                  <rect x="142" y="163" width="18" height="13" rx="5" stroke="#4af0c4" stroke-width="1.5" fill="rgba(74,240,196,0.06)"/>
+                  <line x1="138" y1="169" x2="142" y2="169" stroke="#4af0c4" stroke-width="1.5"/>
+                  <line x1="106" y1="167" x2="120" y2="167" stroke="#4af0c4" stroke-width="1.2"/>
+                  <line x1="160" y1="167" x2="174" y2="167" stroke="#4af0c4" stroke-width="1.2"/>
+                  <ellipse cx="103" cy="210" rx="20" ry="11" fill="url(#skinGrad)" transform="rotate(-15 103 210)"/>
+                  <ellipse cx="177" cy="210" rx="20" ry="11" fill="url(#skinGrad)" transform="rotate(15 177 210)"/>
+                  <ellipse cx="140" cy="275" rx="80" ry="8" fill="rgba(74,240,196,0.06)"/>
+                </svg>
+              </div>
+            </div>
+            <div class="profile-chip">
+              <div class="chip-dot"></div>
+              ☁ Cloud Engineer
+            </div>
+            <div class="profile-badge-card">
+              <div class="badge-icon">🎓</div>
+              <div class="badge-info">
+                <span class="badge-title">Currently</span>
+                <span class="badge-value">B.Tech CSE · 3rd Year</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tech-row">
+          <span class="tech-label">Stack</span>
+          <div class="tech-pills">
+            <span class="tech-pill">AWS</span>
+            <span class="tech-pill">Docker</span>
+            <span class="tech-pill">Terraform</span>
+            <span class="tech-pill">Linux</span>
+            <span class="tech-pill">Python</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="scroll-indicator">
+      <span class="scroll-text">Scroll</span>
+      <div class="scroll-mouse"><div class="scroll-wheel"></div></div>
+      <div class="scroll-arrow"><span></span><span></span><span></span></div>
+    </div>
+  </section>
+
+  <script src="script.js"></script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- ══ ABOUT SECTION ══════════════════════ -->
+<section id="about">
+  <div class="about-container">
+
+    <!-- Header -->
+    <div class="about-header">
+      <div class="about-pill"><span class="about-pill-dot"></span> About Me</div>
+      <h2 class="about-heading">Who I <em>Am</em></h2>
+      <p class="about-subheading">A quick introduction to the person behind the code.</p>
+    </div>
+
+    <!-- Two-column grid -->
+    <div class="about-grid">
+
+      <!-- LEFT -->
+      <div class="about-left-col">
+
+        <div class="about-orbit-wrap">
+          <div class="about-ring"></div>
+          <div class="about-ring about-ring-2"></div>
+
+          <div class="about-img-circle">
+            <div class="about-img-inner">
+              <svg viewBox="0 0 320 320" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <radialGradient id="aBg" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%" stop-color="#0d1627"/>
+                    <stop offset="100%" stop-color="#070b12"/>
+                  </radialGradient>
+                  <linearGradient id="aSkin" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stop-color="#FDBCB4"/>
+                    <stop offset="100%" stop-color="#E8956D"/>
+                  </linearGradient>
+                  <linearGradient id="aShirt" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#1e3a5f"/>
+                    <stop offset="100%" stop-color="#0f2040"/>
+                  </linearGradient>
+                  <linearGradient id="aScreen" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stop-color="#0d1627"/>
+                    <stop offset="100%" stop-color="#060d1a"/>
+                  </linearGradient>
+                  <filter id="aGlow">
+                    <feGaussianBlur stdDeviation="3" result="b"/>
+                    <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+                  </filter>
+                </defs>
+                <rect width="320" height="320" fill="url(#aBg)"/>
+                <g opacity="0.05" stroke="#4af0c4" stroke-width=".6">
+                  <line x1="0" y1="40" x2="320" y2="40"/><line x1="0" y1="80" x2="320" y2="80"/>
+                  <line x1="0" y1="120" x2="320" y2="120"/><line x1="0" y1="160" x2="320" y2="160"/>
+                  <line x1="0" y1="200" x2="320" y2="200"/><line x1="0" y1="240" x2="320" y2="240"/>
+                  <line x1="0" y1="280" x2="320" y2="280"/>
+                  <line x1="40" y1="0" x2="40" y2="320"/><line x1="80" y1="0" x2="80" y2="320"/>
+                  <line x1="120" y1="0" x2="120" y2="320"/><line x1="160" y1="0" x2="160" y2="320"/>
+                  <line x1="200" y1="0" x2="200" y2="320"/><line x1="240" y1="0" x2="240" y2="320"/>
+                  <line x1="280" y1="0" x2="280" y2="320"/>
+                </g>
+                <rect x="60" y="200" width="200" height="12" rx="4" fill="#1a2540"/>
+                <rect x="72" y="148" width="176" height="58" rx="8" fill="#1a2540"/>
+                <rect x="78" y="154" width="164" height="46" rx="5" fill="url(#aScreen)"/>
+                <g filter="url(#aGlow)">
+                  <rect x="84" y="160" width="65" height="3" rx="1.5" fill="#4af0c4" opacity=".9"/>
+                  <rect x="88" y="167" width="45" height="3" rx="1.5" fill="#3b82f6" opacity=".8"/>
+                  <rect x="92" y="174" width="55" height="3" rx="1.5" fill="#a78bfa" opacity=".8"/>
+                  <rect x="88" y="181" width="38" height="3" rx="1.5" fill="#3b82f6" opacity=".7"/>
+                  <rect x="84" y="188" width="60" height="3" rx="1.5" fill="#4af0c4" opacity=".9"/>
+                </g>
+                <ellipse cx="160" cy="278" rx="65" ry="50" fill="url(#aShirt)"/>
+                <path d="M140 228 L160 244 L180 228" stroke="#4af0c4" stroke-width="1.5" fill="none" opacity=".4"/>
+                <rect x="150" y="212" width="20" height="22" rx="7" fill="url(#aSkin)"/>
+                <ellipse cx="160" cy="195" rx="38" ry="40" fill="url(#aSkin)"/>
+                <path d="M122 184 Q124 150 160 148 Q196 150 198 184 Q192 170 182 166 Q171 158 160 158 Q149 158 138 166 Q128 170 122 184Z" fill="#1a0a00"/>
+                <ellipse cx="122" cy="195" rx="6" ry="8" fill="url(#aSkin)"/>
+                <ellipse cx="198" cy="195" rx="6" ry="8" fill="url(#aSkin)"/>
+                <ellipse cx="147" cy="193" rx="7" ry="8" fill="white"/>
+                <ellipse cx="173" cy="193" rx="7" ry="8" fill="white"/>
+                <ellipse cx="149" cy="194" rx="4.5" ry="5" fill="#2d1b00"/>
+                <ellipse cx="175" cy="194" rx="4.5" ry="5" fill="#2d1b00"/>
+                <circle cx="150.5" cy="192" r="1.8" fill="white"/>
+                <circle cx="176.5" cy="192" r="1.8" fill="white"/>
+                <path d="M139 185 Q147 182 155 185" stroke="#1a0a00" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+                <path d="M165 185 Q173 182 181 185" stroke="#1a0a00" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+                <path d="M151 207 Q160 214 169 207" stroke="#c97c5a" stroke-width="2" fill="none" stroke-linecap="round"/>
+                <rect x="138" y="188" width="20" height="14" rx="5" stroke="#4af0c4" stroke-width="1.5" fill="rgba(74,240,196,0.06)"/>
+                <rect x="162" y="188" width="20" height="14" rx="5" stroke="#4af0c4" stroke-width="1.5" fill="rgba(74,240,196,0.06)"/>
+                <line x1="158" y1="194" x2="162" y2="194" stroke="#4af0c4" stroke-width="1.5"/>
+                <line x1="122" y1="192" x2="138" y2="192" stroke="#4af0c4" stroke-width="1.2"/>
+                <line x1="182" y1="192" x2="198" y2="192" stroke="#4af0c4" stroke-width="1.2"/>
+                <ellipse cx="116" cy="240" rx="22" ry="12" fill="url(#aSkin)" transform="rotate(-15 116 240)"/>
+                <ellipse cx="204" cy="240" rx="22" ry="12" fill="url(#aSkin)" transform="rotate(15 204 240)"/>
+                <ellipse cx="160" cy="315" rx="90" ry="9" fill="rgba(74,240,196,0.05)"/>
+              </svg>
+            </div>
+          </div>
+
+          <div class="about-chip-location">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
+              <circle cx="12" cy="9" r="2.5"/>
+            </svg>
+            Phagwara, Punjab
+          </div>
+
+          <div class="about-chip-edu">
+            <div class="about-chip-edu-icon">🎓</div>
+            <div class="about-chip-edu-text">
+              <span class="about-chip-edu-label">Education</span>
+              <span class="about-chip-edu-value">B.Tech CSE</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Highlight cards -->
+        <div class="about-hc-row">
+          <div class="about-hc">
+            <div class="about-hc-icon">☁</div>
+            <div class="about-hc-text">Cloud Computing<br>Enthusiast</div>
+          </div>
+          <div class="about-hc">
+            <div class="about-hc-icon">💻</div>
+            <div class="about-hc-text">Web<br>Developer</div>
+          </div>
+          <div class="about-hc">
+            <div class="about-hc-icon">🧩</div>
+            <div class="about-hc-text">Problem<br>Solver</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- RIGHT -->
+      <div class="about-right-col">
+
+        <div class="about-nametag">
+          <span class="about-nametag-dot"></span>
+          Raushan Kumar
+        </div>
+
+        <h3 class="about-role-title">Aspiring <span>Cloud Engineer</span></h3>
+
+        <p class="about-para">
+          I am a <strong>B.Tech 3rd year Computer Science</strong> student with a minor in
+          Cloud Computing. I am passionate about building modern web applications, exploring
+          cloud technologies, and solving complex problems using efficient algorithms and data structures.
+        </p>
+
+        <p class="about-para">
+          I enjoy working with <strong>HTML, CSS, JavaScript</strong> and I am also learning
+          cloud platforms like <strong>AWS</strong>. Along with development, I actively practice
+          problem solving on <strong>LeetCode, CodeChef,</strong> and <strong>GeeksforGeeks</strong>.
+        </p>
+
+        <div class="about-info-grid">
+          <div class="about-info-cell">
+            <span class="about-info-cell-label">📍 Location</span>
+            <span class="about-info-cell-value">Phagwara, Punjab, India</span>
+          </div>
+          <div class="about-info-cell">
+            <span class="about-info-cell-label">🎓 Degree</span>
+            <span class="about-info-cell-value">B.Tech Computer Science</span>
+          </div>
+          <div class="about-info-cell">
+            <span class="about-info-cell-label">☁ Specialization</span>
+            <span class="about-info-cell-value">Cloud Computing (Minor)</span>
+          </div>
+          <div class="about-info-cell">
+            <span class="about-info-cell-label">🚀 Focus</span>
+            <span class="about-info-cell-value">Cloud & Web Development</span>
+          </div>
+        </div>
+
+        <div class="about-platforms">
+          <span class="about-platforms-label">Active on</span>
+          <div class="about-platform-badges">
+            <a href="#" class="about-pbadge lc">LeetCode</a>
+            <a href="#" class="about-pbadge cc">CodeChef</a>
+            <a href="#" class="about-pbadge gfg">GeeksforGeeks</a>
+          </div>
+        </div>
+
+        <div class="about-cta-row">
+          <a href="#projects" class="about-btn-primary">
+            <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/>
+              <path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/>
+            </svg>
+            View My Work
+          </a>
+          <a href="mailto:raushankumarbhardwaj4510@gmail.com" class="about-btn-secondary">
+            <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+              <polyline points="22,6 12,13 2,6"/>
+            </svg>
+            Get In Touch
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+
+
+<!-- ══ SKILLS SECTION ══════════════════ -->
+<section id="skills">
+  <div class="skills-container">
+
+    <!-- Header -->
+    <div class="skills-header">
+      <div class="skills-pill"><span class="skills-pill-dot"></span> Skills</div>
+      <h2 class="skills-heading">My <em>Expertise</em></h2>
+      <p class="skills-subheading">Technologies, tools and competencies I've built up on my journey as a Cloud Engineer.</p>
+    </div>
+
+    <!-- Categories -->
+    <div class="skills-grid">
+
+      <!-- ── Programming ── -->
+      <div class="skill-cat-card">
+        <div class="skill-cat-header">
+          <div class="skill-cat-icon">⌨️</div>
+          <div>
+            <div class="skill-cat-title">Programming</div>
+            <div class="skill-cat-count">6 skills</div>
+          </div>
+        </div>
+        <div class="skill-badges">
+
+          <div class="skill-badge">
+            <div class="skill-badge-logo" style="background: rgba(0,89,156,0.15); border-color: rgba(0,89,156,0.3);">
+              <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M16 2L4 8v16l12 6 12-6V8L16 2z" fill="rgba(0,89,156,0.2)" stroke="#005b9e" stroke-width="1.5"/>
+                <text x="16" y="20" text-anchor="middle" font-size="9" font-weight="bold" fill="#4da6ff" font-family="monospace">C</text>
+              </svg>
+            </div>
+            <span class="skill-badge-name">C</span>
+          </div>
+
+          <div class="skill-badge">
+            <div class="skill-badge-logo" style="background: rgba(0,89,156,0.15); border-color: rgba(0,89,156,0.3);">
+              <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M16 2L4 8v16l12 6 12-6V8L16 2z" fill="rgba(0,89,156,0.2)" stroke="#005b9e" stroke-width="1.5"/>
+                <text x="16" y="20" text-anchor="middle" font-size="7.5" font-weight="bold" fill="#4da6ff" font-family="monospace">C++</text>
+              </svg>
+            </div>
+            <span class="skill-badge-name">C++</span>
+          </div>
+
+          <div class="skill-badge">
+            <div class="skill-badge-logo" style="background: rgba(237,137,54,0.12); border-color: rgba(237,137,54,0.3);">
+              <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                <path d="M16 3C8.268 3 2 9.268 2 17c0 7.732 6.268 14 14 14s14-6.268 14-14C30 9.268 23.732 3 16 3z" fill="rgba(237,137,54,0.15)"/>
+                <path d="M21.5 11.5c0 3.038-2.462 5.5-5.5 5.5S10.5 14.538 10.5 11.5 12.962 6 16 6s5.5 2.462 5.5 5.5z" fill="#ED8936"/>
+                <path d="M8 24c1.5-3 4.5-5 8-5s6.5 2 8 5" stroke="#ED8936" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <span class="skill-badge-name">Java</span>
+          </div>
+
+          <div class="skill-badge">
+            <div class="skill-badge-logo" style="background: rgba(55,118,171,0.15); border-color: rgba(55,118,171,0.3);">
+              <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                <path d="M16 3l-3 9H4l7.5 5.5L9 27l7-5 7 5-2.5-9.5L28 12h-9L16 3z" fill="none" stroke="#3776AB" stroke-width="1.5" stroke-linejoin="round"/>
+                <path d="M12 13h8M14 9h4" stroke="#FFD43B" stroke-width="1.2" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <span class="skill-badge-name">Python</span>
+          </div>
+
+          <div class="skill-badge">
+            <div class="skill-badge-logo" style="background: rgba(245,166,35,0.12); border-color: rgba(245,166,35,0.3);">
+              <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                <rect x="3" y="3" width="26" height="26" rx="4" fill="rgba(245,166,35,0.15)" stroke="#F5A623" stroke-width="1.5"/>
+                <text x="16" y="22" text-anchor="middle" font-size="13" font-weight="bold" fill="#F5A623" font-family="monospace">JS</text>
+              </svg>
+            </div>
+            <span class="skill-badge-name">JavaScript</span>
+          </div>
+
+          <div class="skill-badge">
+            <div class="skill-badge-logo" style="background: rgba(74,240,196,0.1); border-color: rgba(74,240,196,0.25);">
+              <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="4" y="4" width="24" height="24" rx="3" stroke="#4af0c4" stroke-width="1.5" fill="rgba(74,240,196,0.08)"/>
+                <path d="M9 16h4M19 10l-6 12" stroke="#4af0c4" stroke-width="1.5" stroke-linecap="round"/>
+                <circle cx="22" cy="16" r="2" fill="#4af0c4"/>
+              </svg>
+            </div>
+            <span class="skill-badge-name">DSA</span>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ── Web Development ── -->
+      <div class="skill-cat-card">
+        <div class="skill-cat-header">
+          <div class="skill-cat-icon">🌐</div>
+          <div>
+            <div class="skill-cat-title">Web Development</div>
+            <div class="skill-cat-count">4 skills</div>
+          </div>
+        </div>
+        <div class="skill-badges">
+
+          <div class="skill-badge">
+            <div class="skill-badge-logo" style="background: rgba(249,115,22,0.12); border-color: rgba(249,115,22,0.3);">
+              <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                <path d="M4 4l2 22 10 3 10-3 2-22H4z" fill="rgba(249,115,22,0.15)" stroke="#f97316" stroke-width="1.2"/>
+                <path d="M16 25l-7-2-1-14h16l-1 11-7 5z" fill="rgba(249,115,22,0.2)"/>
+                <text x="16" y="18" text-anchor="middle" font-size="8" font-weight="bold" fill="#f97316" font-family="monospace">HTML</text>
+              </svg>
+            </div>
+            <span class="skill-badge-name">HTML</span>
+          </div>
+
+          <div class="skill-badge">
+            <div class="skill-badge-logo" style="background: rgba(59,130,246,0.12); border-color: rgba(59,130,246,0.3);">
+              <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                <path d="M4 4l2 22 10 3 10-3 2-22H4z" fill="rgba(59,130,246,0.15)" stroke="#3b82f6" stroke-width="1.2"/>
+                <text x="16" y="18" text-anchor="middle" font-size="8" font-weight="bold" fill="#3b82f6" font-family="monospace">CSS</text>
+              </svg>
+            </div>
+            <span class="skill-badge-name">CSS</span>
+          </div>
+
+          <div class="skill-badge">
+            <div class="skill-badge-logo" style="background: rgba(167,139,250,0.12); border-color: rgba(167,139,250,0.3);">
+              <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="3" y="6" width="10" height="14" rx="2" stroke="#a78bfa" stroke-width="1.4"/>
+                <rect x="16" y="10" width="13" height="9" rx="2" stroke="#a78bfa" stroke-width="1.4"/>
+                <path d="M3 24h26" stroke="#a78bfa" stroke-width="1.2" stroke-linecap="round" stroke-dasharray="3 2"/>
+              </svg>
+            </div>
+            <span class="skill-badge-name">Responsive Design</span>
+          </div>
+
+          <div class="skill-badge">
+            <div class="skill-badge-logo" style="background: rgba(74,240,196,0.1); border-color: rgba(74,240,196,0.25);">
+              <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="4" y="4" width="24" height="20" rx="3" stroke="#4af0c4" stroke-width="1.4"/>
+                <path d="M10 12l-4 4 4 4M22 12l4 4-4 4" stroke="#4af0c4" stroke-width="1.4" stroke-linecap="round"/>
+                <path d="M14 22l4-12" stroke="#4af0c4" stroke-width="1.2" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <span class="skill-badge-name">DOM Manipulation</span>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ── Cloud & Technologies ── -->
+      <div class="skill-cat-card">
+        <div class="skill-cat-header">
+          <div class="skill-cat-icon">☁️</div>
+          <div>
+            <div class="skill-cat-title">Cloud & Technologies</div>
+            <div class="skill-cat-count">3 skills</div>
+          </div>
+        </div>
+        <div class="skill-badges">
+
+          <div class="skill-badge">
+            <div class="skill-badge-logo" style="background: rgba(74,240,196,0.1); border-color: rgba(74,240,196,0.25);">
+              <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M8 22a5 5 0 010-10 7 7 0 0113.5-2A4.5 4.5 0 0124 19H8z" stroke="#4af0c4" stroke-width="1.5" fill="rgba(74,240,196,0.1)"/>
+              </svg>
+            </div>
+            <span class="skill-badge-name">Cloud Computing</span>
+          </div>
+
+          <div class="skill-badge">
+            <div class="skill-badge-logo" style="background: rgba(249,115,22,0.12); border-color: rgba(249,115,22,0.3);">
+              <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                <rect x="3" y="3" width="26" height="26" rx="5" fill="rgba(249,115,22,0.15)" stroke="#f97316" stroke-width="1.4"/>
+                <text x="16" y="20" text-anchor="middle" font-size="8.5" font-weight="bold" fill="#f97316" font-family="monospace">AWS</text>
+              </svg>
+            </div>
+            <span class="skill-badge-name">AWS (Basic)</span>
+          </div>
+
+          <div class="skill-badge">
+            <div class="skill-badge-logo" style="background: rgba(59,130,246,0.12); border-color: rgba(59,130,246,0.3);">
+              <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="4" y="8" width="10" height="8" rx="2" stroke="#3b82f6" stroke-width="1.4"/>
+                <rect x="18" y="4" width="10" height="8" rx="2" stroke="#3b82f6" stroke-width="1.4"/>
+                <rect x="18" y="20" width="10" height="8" rx="2" stroke="#3b82f6" stroke-width="1.4"/>
+                <path d="M14 12h4M14 12c0 4 4 8 4 8M14 12c0-4 4-8 4-8" stroke="#3b82f6" stroke-width="1.2" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <span class="skill-badge-name">Cloud Architecture</span>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ── Tools & Platforms ── -->
+      <div class="skill-cat-card">
+        <div class="skill-cat-header">
+          <div class="skill-cat-icon">🛠️</div>
+          <div>
+            <div class="skill-cat-title">Tools & Platforms</div>
+            <div class="skill-cat-count">4 skills</div>
+          </div>
+        </div>
+        <div class="skill-badges">
+
+          <div class="skill-badge">
+            <div class="skill-badge-logo" style="background: rgba(249,115,22,0.12); border-color: rgba(249,115,22,0.3);">
+              <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="16" cy="16" r="12" stroke="#f97316" stroke-width="1.4" fill="rgba(249,115,22,0.1)"/>
+                <path d="M10 16l3 3 9-9" stroke="#f97316" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M16 8v2M16 22v2M8 16h2M22 16h2" stroke="#f97316" stroke-width="1.2" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <span class="skill-badge-name">Git</span>
+          </div>
+
+          <div class="skill-badge">
+            <div class="skill-badge-logo" style="background: rgba(232,234,240,0.08); border-color: rgba(232,234,240,0.2);">
+              <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M16 3C8.268 3 2 9.268 2 17a14 14 0 009.58 13.32c.7.13.957-.304.957-.675 0-.333-.013-1.44-.02-2.63-3.893.847-4.713-1.677-4.713-1.677-.636-1.617-1.553-2.047-1.553-2.047-1.27-.868.097-.85.097-.85 1.404.099 2.143 1.441 2.143 1.441 1.248 2.139 3.274 1.52 4.07 1.163.127-.904.488-1.52.888-1.869-3.107-.353-6.374-1.553-6.374-6.912 0-1.527.545-2.775 1.44-3.754-.144-.354-.624-1.776.137-3.704 0 0 1.174-.376 3.847 1.434A13.4 13.4 0 0116 9.44c1.19.005 2.386.16 3.504.47 2.67-1.81 3.843-1.434 3.843-1.434.762 1.928.283 3.35.138 3.704.897.98 1.438 2.227 1.438 3.754 0 5.372-3.272 6.555-6.39 6.902.503.433.95 1.286.95 2.592 0 1.87-.017 3.378-.017 3.836 0 .374.253.81.963.673A14.002 14.002 0 0030 17C30 9.268 23.732 3 16 3z" fill="#e8eaf0" opacity=".8"/>
+              </svg>
+            </div>
+            <span class="skill-badge-name">GitHub</span>
+          </div>
+
+          <div class="skill-badge">
+            <div class="skill-badge-logo" style="background: rgba(59,130,246,0.12); border-color: rgba(59,130,246,0.3);">
+              <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M4 8l7 8-7 8h4l7-8-7-8H4zM14 22h14" stroke="#3b82f6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <span class="skill-badge-name">VS Code</span>
+          </div>
+
+          <div class="skill-badge">
+            <div class="skill-badge-logo" style="background: rgba(167,139,250,0.12); border-color: rgba(167,139,250,0.3);">
+              <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="16" cy="16" r="12" stroke="#a78bfa" stroke-width="1.4" fill="rgba(167,139,250,0.08)"/>
+                <circle cx="16" cy="16" r="4" stroke="#a78bfa" stroke-width="1.4"/>
+                <path d="M16 4v4M16 24v4M4 16h4M24 16h4" stroke="#a78bfa" stroke-width="1.2" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <span class="skill-badge-name">Linux Basics</span>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ── Soft Skills (full width) ── -->
+      <div class="skill-cat-card skill-cat-wide">
+        <div class="skill-cat-header">
+          <div class="skill-cat-icon">🧠</div>
+          <div>
+            <div class="skill-cat-title">Soft Skills</div>
+            <div class="skill-cat-count">5 skills</div>
+          </div>
+        </div>
+        <div class="soft-skills-row">
+          <div class="soft-skill-pill">
+            <span class="ssp-icon">🎯</span>
+            <span class="ssp-label">Problem Solving</span>
+          </div>
+          <div class="soft-skill-pill">
+            <span class="ssp-icon">🔍</span>
+            <span class="ssp-label">Analytical Thinking</span>
+          </div>
+          <div class="soft-skill-pill">
+            <span class="ssp-icon">🤝</span>
+            <span class="ssp-label">Team Collaboration</span>
+          </div>
+          <div class="soft-skill-pill">
+            <span class="ssp-icon">💬</span>
+            <span class="ssp-label">Communication</span>
+          </div>
+          <div class="soft-skill-pill">
+            <span class="ssp-icon">⚡</span>
+            <span class="ssp-label">Adaptability</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
