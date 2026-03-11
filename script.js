@@ -187,3 +187,331 @@
   });
 
 })();
+
+
+
+
+/* ════════════════════════════════════════
+   PROJECTS SECTION — Scroll Reveal + Mouse Glow
+════════════════════════════════════════ */
+(function () {
+
+  window.addEventListener('load', function () {
+
+    var cards = document.querySelectorAll('.proj-card');
+
+    /* Step 1: Mark for entrance animation */
+    cards.forEach(function (card, i) {
+      card.classList.add('proj-will-animate');
+      card.style.transitionDelay = (i * 0.12) + 's';
+    });
+
+    /* Step 2: Mouse-tracking glow per card */
+    cards.forEach(function (card) {
+      card.addEventListener('mousemove', function (e) {
+        var rect = card.getBoundingClientRect();
+        var x = ((e.clientX - rect.left) / rect.width  * 100).toFixed(1);
+        var y = ((e.clientY - rect.top)  / rect.height * 100).toFixed(1);
+        card.style.setProperty('--mx', x + '%');
+        card.style.setProperty('--my', y + '%');
+      });
+    });
+
+    /* ── PixelFrame lightbox hover effect ── */
+var pfCards = document.querySelectorAll('.pf-img-card');
+var pfLightbox = document.getElementById('pf-lightbox');
+var pfLightboxImg = pfLightbox ? pfLightbox.querySelector('.pf-lightbox-img') : null;
+var pfLightboxCaption = pfLightbox ? pfLightbox.querySelector('.pf-lightbox-caption') : null;
+
+var pfColors = [
+  'linear-gradient(135deg, rgba(167,139,250,0.5), rgba(59,130,246,0.4))',
+  'linear-gradient(135deg, rgba(74,240,196,0.5), rgba(59,130,246,0.4))',
+  'linear-gradient(135deg, rgba(249,115,22,0.5), rgba(245,166,35,0.4))',
+  'linear-gradient(135deg, rgba(59,130,246,0.5), rgba(167,139,250,0.4))',
+  'linear-gradient(135deg, rgba(236,72,153,0.45), rgba(167,139,250,0.4))'
+];
+
+var pfCaptions = ['🏔 Landscape', '🌊 Ocean', '🌅 Sunset', '🏙 City', '🌸 Flora'];
+
+var pfHideTimer;
+
+pfCards.forEach(function (card, i) {
+  card.addEventListener('mouseenter', function () {
+    clearTimeout(pfHideTimer);
+    if (pfLightboxImg) pfLightboxImg.style.background = pfColors[i];
+    if (pfLightboxCaption) pfLightboxCaption.textContent = pfCaptions[i];
+    if (pfLightbox) pfLightbox.classList.add('active');
+  });
+
+  card.addEventListener('mouseleave', function () {
+    pfHideTimer = setTimeout(function () {
+      if (pfLightbox) pfLightbox.classList.remove('active');
+    }, 300);
+  });
+});
+
+if (pfLightbox) {
+  pfLightbox.addEventListener('mouseenter', function () {
+    clearTimeout(pfHideTimer);
+  });
+  pfLightbox.addEventListener('mouseleave', function () {
+    pfLightbox.classList.remove('active');
+  });
+}
+
+/* ── Toolbar tab switching ── */
+var pfTabs = document.querySelectorAll('.pf-tb-btn');
+pfTabs.forEach(function (tab) {
+  tab.addEventListener('click', function () {
+    pfTabs.forEach(function (t) { t.classList.remove('active'); });
+    tab.classList.add('active');
+  });
+});
+/* ── Rhythm — Play/Pause toggle ── */
+var rpPlayBtn = document.getElementById('rp-play-btn');
+var rpBars    = document.querySelectorAll('.rp-bar');
+var rpDisc    = document.querySelector('.rp-album-disc');
+var rpEqBars  = document.querySelectorAll('.rp-pl-eq span');
+var rpPlaying = true;
+
+if (rpPlayBtn) {
+  rpPlayBtn.addEventListener('click', function () {
+    rpPlaying = !rpPlaying;
+
+    /* Swap icons */
+    var pause = rpPlayBtn.querySelector('.rp-icon-pause');
+    var play  = rpPlayBtn.querySelector('.rp-icon-play');
+    if (pause) pause.style.display = rpPlaying ? 'block' : 'none';
+    if (play)  play.style.display  = rpPlaying ? 'none'  : 'block';
+
+    /* Pause/resume waveform bars */
+    rpBars.forEach(function (bar) {
+      bar.style.animationPlayState = rpPlaying ? 'running' : 'paused';
+    });
+
+    /* Pause/resume disc spin */
+    if (rpDisc) {
+      rpDisc.style.animationPlayState = rpPlaying ? 'running' : 'paused';
+    }
+
+    /* Pause/resume eq bars */
+    rpEqBars.forEach(function (bar) {
+      bar.style.animationPlayState = rpPlaying ? 'running' : 'paused';
+    });
+  });
+}
+
+/* ── Playlist item click → highlight ── */
+var rpItems = document.querySelectorAll('.rp-playlist-item');
+var rpSongTitles = ['Midnight Groove', 'Neon Dreams', 'Chill Waves'];
+var rpSongMeta   = [
+  'RhythmPlayer • Lo-fi Beats',
+  'RhythmPlayer • Synthwave',
+  'RhythmPlayer • Ambient'
+];
+
+rpItems.forEach(function (item, i) {
+  item.addEventListener('click', function () {
+    rpItems.forEach(function (it) { it.classList.remove('rp-playlist-active'); });
+    item.classList.add('rp-playlist-active');
+
+    /* Update song info */
+    var titleEl  = document.querySelector('.rp-song-title');
+    var artistEl = document.querySelector('.rp-song-artist');
+    if (titleEl)  titleEl.textContent  = rpSongTitles[i] || 'Unknown';
+    if (artistEl) artistEl.textContent = rpSongMeta[i]   || '';
+
+    /* Reset progress */
+    var fill = document.querySelector('.rp-progress-fill');
+    if (fill) {
+      fill.style.transition = 'none';
+      fill.style.width = '0%';
+      setTimeout(function () {
+        fill.style.transition = 'width 0.4s ease';
+        fill.style.width = (20 + Math.random() * 50).toFixed(0) + '%';
+      }, 50);
+    }
+  });
+});
+
+    /* Step 3: Double rAF then observe */
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () {
+
+        var observer = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('proj-visible');
+              observer.unobserve(entry.target);
+            }
+          });
+        }, {
+          threshold: 0.1,
+          rootMargin: '0px 0px -20px 0px'
+        });
+
+        cards.forEach(function (card) {
+          observer.observe(card);
+        });
+
+      });
+    });
+
+  });
+
+})();
+
+/* ════════════════════════════════════════
+   CERTIFICATES SECTION — Scroll Reveal + Counter + Mouse Glow
+════════════════════════════════════════ */
+(function () {
+
+  window.addEventListener('load', function () {
+
+    var cards    = document.querySelectorAll('.cert-card');
+    var statNums = document.querySelectorAll('.cert-stat-num');
+
+    /* ── Step 1: Mark cards for entrance animation ── */
+    cards.forEach(function (card, i) {
+      card.classList.add('cert-will-animate');
+      card.style.transitionDelay = (i * 0.12) + 's';
+    });
+
+    /* ── Step 2: Mouse-tracking glow ── */
+    cards.forEach(function (card) {
+      card.addEventListener('mousemove', function (e) {
+        var rect = card.getBoundingClientRect();
+        var x = ((e.clientX - rect.left) / rect.width  * 100).toFixed(1);
+        var y = ((e.clientY - rect.top)  / rect.height * 100).toFixed(1);
+        card.style.setProperty('--mx', x + '%');
+        card.style.setProperty('--my', y + '%');
+      });
+    });
+
+    /* ── Step 3: Animated number counter ── */
+    function animateCounter(el) {
+      var target   = parseInt(el.getAttribute('data-target'), 10);
+      var duration = 1400;
+      var start    = performance.now();
+
+      function tick(now) {
+        var elapsed  = now - start;
+        var progress = Math.min(elapsed / duration, 1);
+        var eased    = 1 - Math.pow(1 - progress, 3);
+        el.textContent = Math.round(eased * target);
+        if (progress < 1) requestAnimationFrame(tick);
+      }
+
+      requestAnimationFrame(tick);
+    }
+
+    /* ── Step 4: Double rAF then observe ── */
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () {
+
+        /* Cards observer */
+        var cardObserver = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('cert-visible');
+              cardObserver.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.1, rootMargin: '0px 0px -20px 0px' });
+
+        cards.forEach(function (card) { cardObserver.observe(card); });
+
+        /* Stats counter observer */
+        var statsRow = document.querySelector('.cert-stats-row');
+        if (statsRow) {
+          var statsObserver = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+              if (entry.isIntersecting) {
+                statNums.forEach(function (num) { animateCounter(num); });
+                statsObserver.unobserve(entry.target);
+              }
+            });
+          }, { threshold: 0.5 });
+
+          statsObserver.observe(statsRow);
+        }
+
+      });
+    });
+
+  });
+
+})();
+
+
+
+/* ════════════════════════════════════════
+   EXPERIENCE SECTION — Scroll Reveal + Timeline + Mouse Glow
+════════════════════════════════════════ */
+(function () {
+
+  window.addEventListener('load', function () {
+
+    var cards    = document.querySelectorAll('.exp-card');
+    var items    = document.querySelectorAll('.exp-item');
+    var progress = document.getElementById('exp-timeline-progress');
+
+    /* ── Step 1: Mark cards for entrance ── */
+    cards.forEach(function (card, i) {
+      card.classList.add('exp-will-animate');
+      card.style.transitionDelay = (i * 0.18) + 's';
+    });
+
+    /* ── Step 2: Mouse-tracking glow ── */
+    cards.forEach(function (card) {
+      card.addEventListener('mousemove', function (e) {
+        var rect = card.getBoundingClientRect();
+        var x = ((e.clientX - rect.left) / rect.width  * 100).toFixed(1);
+        var y = ((e.clientY - rect.top)  / rect.height * 100).toFixed(1);
+        card.style.setProperty('--mx', x + '%');
+        card.style.setProperty('--my', y + '%');
+      });
+    });
+
+    /* ── Step 3: Timeline progress fill ── */
+    function updateTimelineProgress() {
+      if (!progress) return;
+      var section = document.getElementById('experience');
+      if (!section) return;
+
+      var rect       = section.getBoundingClientRect();
+      var winH       = window.innerHeight;
+      var sectionH   = section.offsetHeight;
+      var scrolled   = Math.max(0, winH - rect.top);
+      var pct        = Math.min(100, (scrolled / (sectionH + winH)) * 180);
+      progress.style.height = pct + '%';
+    }
+
+    window.addEventListener('scroll', updateTimelineProgress, { passive: true });
+    updateTimelineProgress();
+
+    /* ── Step 4: Double rAF then observe ── */
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () {
+
+        var observer = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              var card = entry.target.querySelector('.exp-card');
+              if (card) card.classList.add('exp-visible');
+              observer.unobserve(entry.target);
+            }
+          });
+        }, {
+          threshold: 0.15,
+          rootMargin: '0px 0px -30px 0px'
+        });
+
+        items.forEach(function (item) { observer.observe(item); });
+
+      });
+    });
+
+  });
+
+})();
