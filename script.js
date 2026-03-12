@@ -849,7 +849,7 @@ rpItems.forEach(function (item, i) {
 2. **Email Services** → Add Service → choose Gmail → connect your Gmail → copy the **Service ID**
 3. **Email Templates** → Create Template → paste this template body:
 ```
-New message from your portfolio!
+// New message from your portfolio!
 
 Name: {{from_name}}
 Email: {{from_email}}
@@ -857,3 +857,93 @@ Subject: {{subject}}
 
 Message:
 {{message}}
+
+
+
+
+
+
+
+
+
+/* ════════════════════════════════════════
+   FOOTER — Scroll To Top + Smooth Scroll + Reveal
+════════════════════════════════════════ */
+(function () {
+
+  window.addEventListener('load', function () {
+
+    var topBtn = document.getElementById('footer-top-btn');
+
+    /* ── Scroll-to-top button visibility ── */
+    function handleScroll() {
+      if (!topBtn) return;
+      if (window.scrollY > 400) {
+        topBtn.classList.add('visible');
+      } else {
+        topBtn.classList.remove('visible');
+      }
+    }
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+
+    /* ── Scroll to top on click ── */
+    if (topBtn) {
+      topBtn.addEventListener('click', function () {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    }
+
+    /* ── Smooth scroll for ALL anchor links (navbar + footer) ── */
+    document.querySelectorAll('a[href^="#"]').forEach(function (link) {
+      link.addEventListener('click', function (e) {
+        var href = link.getAttribute('href');
+        if (!href || href === '#') {
+          e.preventDefault();
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+          return;
+        }
+        var target = document.querySelector(href);
+        if (target) {
+          e.preventDefault();
+          var offset     = 70; /* navbar height */
+          var targetTop  = target.getBoundingClientRect().top + window.scrollY - offset;
+          window.scrollTo({ top: targetTop, behavior: 'smooth' });
+        }
+      });
+    });
+
+    /* ── Footer reveal animation ── */
+    var footerEls = document.querySelectorAll(
+      '.footer-brand, .footer-links-col, .footer-social-col'
+    );
+
+    footerEls.forEach(function (el, i) {
+      el.style.opacity   = '0';
+      el.style.transform = 'translateY(22px)';
+      el.style.transition = 'opacity 0.6s ease ' + (i * 0.1) + 's, transform 0.6s ease ' + (i * 0.1) + 's';
+    });
+
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.style.opacity   = '1';
+              entry.target.style.transform = 'translateY(0)';
+              io.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.1 });
+
+        footerEls.forEach(function (el) { io.observe(el); });
+      });
+    });
+
+  });
+
+})();
+
+
+
