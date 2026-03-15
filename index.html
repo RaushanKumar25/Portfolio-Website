@@ -8,6 +8,60 @@
   <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
+<!-- ══ SIDE NAV ══════════════════════════ -->
+<div class="sidenav" id="sidenav">
+  <div class="sidenav-inner">
+
+    <div class="sidenav-label">Navigate</div>
+
+    <ul class="sidenav-links">
+      <li>
+        <a href="#home" class="sidenav-link active" data-section="home">
+          <span class="sidenav-dot"></span>
+          <span class="sidenav-text">Home</span>
+        </a>
+      </li>
+      <li>
+        <a href="#about" class="sidenav-link" data-section="about">
+          <span class="sidenav-dot"></span>
+          <span class="sidenav-text">About</span>
+        </a>
+      </li>
+      <li>
+        <a href="#skills" class="sidenav-link" data-section="skills">
+          <span class="sidenav-dot"></span>
+          <span class="sidenav-text">Skills</span>
+        </a>
+      </li>
+      <li>
+        <a href="#experience" class="sidenav-link" data-section="experience">
+          <span class="sidenav-dot"></span>
+          <span class="sidenav-text">Experience</span>
+        </a>
+      </li>
+      <li>
+        <a href="#projects" class="sidenav-link" data-section="projects">
+          <span class="sidenav-dot"></span>
+          <span class="sidenav-text">Projects</span>
+        </a>
+      </li>
+      <li>
+        <a href="#education" class="sidenav-link" data-section="education">
+          <span class="sidenav-dot"></span>
+          <span class="sidenav-text">Education</span>
+        </a>
+      </li>
+      <li>
+        <a href="#contact" class="sidenav-link" data-section="contact">
+          <span class="sidenav-dot"></span>
+          <span class="sidenav-text">Contact</span>
+        </a>
+      </li>
+    </ul>
+
+  </div>
+</div>
+
 
   <canvas id="hero-canvas"></canvas>
   <div class="noise"></div>
@@ -29,7 +83,7 @@
 
         <p class="hero-hi">Hi, I'm</p>
         <h1 class="hero-name">
-          <span class="first">Raushan </span><br>
+          <span class="first">Raushan</span><br>
           <span class="last">Kumar</span>
         </h1>
 
@@ -42,7 +96,7 @@
         </div>
 
         <p class="hero-bio">
-          A passionate B.Tech 3rd year Computer Science student with a minor in Cloud Computing.
+          A passionate B.Tech 3rd year Computer Science student with a specialization in Cloud Computing.
           I enjoy building modern web applications, learning cloud technologies, and solving complex problems.
         </p>
 
@@ -53,15 +107,17 @@
           </svg>
           Phagwara, Punjab, India
         </div>
-
-        <div class="hero-cta">
-          <a href="#projects" class="btn-primary">
-            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-              <path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/>
-              <path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/>
-            </svg>
-            Resume
-          </a>
+<div class="hero-cta">
+  <a href="https://drive.google.com/file/d/1Lq0nklgugktde4VB-2k9xe8OZddnQFHy/view?usp=sharing"
+     target="_blank"
+     rel="noopener noreferrer"
+     class="btn-primary">
+    <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+      <path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/>
+      <path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/>
+    </svg>
+    Resume
+  </a>
           <a href="mailto:raushankumarbhardwaj4510@gmail.com" class="btn-secondary">
             <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
               <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
@@ -106,7 +162,7 @@
           <div style="position:relative;">
             <div class="profile-frame">
               <div class="profile-inner">
-                <img src="homeimage/pic 2.jpeg" alt="Raushan Kumar" class="profile-img"/>
+                <img src="homeimage/img 4.jpeg" alt="Raushan Kumar" class="profile-img"/>
                   <defs>
                     <radialGradient id="bgGrad" cx="50%" cy="50%" r="50%">
                       <stop offset="0%" stop-color="#0d1627"/><stop offset="100%" stop-color="#070b12"/>
@@ -362,8 +418,8 @@
         <h3 class="about-role-title">Aspiring <span>Cloud Engineer</span></h3>
 
         <p class="about-para">
-          I am a <strong>B.Tech 3rd year Computer Science</strong> student with a minor in
-          Cloud Computing. I am passionate about building modern web applications, exploring
+          I am a <strong>B.Tech 3rd year Computer Science</strong> student with a specialization in Cloud Computing.
+          I am passionate about building modern web applications, exploring
           cloud technologies, and solving complex problems using efficient algorithms and data structures.
         </p>
 
@@ -787,7 +843,7 @@
         <div class="soft-skills-row">
           <div class="soft-skill-pill">
             <span class="ssp-icon">🎯</span>
-            <span class="ssp-label">Problem Solving</span>
+            <span class="ssp-label">Time Management</span>
           </div>
           <div class="soft-skill-pill">
             <span class="ssp-icon">🔍</span>
@@ -1926,7 +1982,7 @@
             <!-- CGPA display -->
             <div class="edu-cgpa-box">
               <div class="edu-cgpa-label">CGPA</div>
-              <div class="edu-cgpa-value">7.67</div>
+              <div class="edu-cgpa-value">7.76</div>
               <div class="edu-cgpa-sub">out of 10</div>
             </div>
           </div>
@@ -2223,7 +2279,7 @@
                   <circle cx="12" cy="7" r="4"/>
                 </svg>
                 <input type="text" id="con-name" name="name"
-                       class="con-input" placeholder="Raushan Kumar" autocomplete="name"/>
+                       class="con-input" placeholder="Please enter your name" autocomplete="name"/>
               </div>
               <div class="con-error" id="err-name">Please enter your name.</div>
             </div>
@@ -2263,7 +2319,7 @@
               </svg>
               <textarea id="con-message" name="message"
                         class="con-input con-textarea"
-                        placeholder="Hi Raushan, I'd love to discuss..."
+                        placeholder="Hi, I'd love to discuss..."
                         rows="5"></textarea>
             </div>
             <div class="con-error" id="err-message">Please enter a message.</div>

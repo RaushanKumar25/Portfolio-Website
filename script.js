@@ -945,5 +945,72 @@ Message:
 
 })();
 
+/* ════════════════════════════════════════
+   SIDE NAV JS — Fixed active tracking
+════════════════════════════════════════ */
+(function () {
 
+  function initSideNav() {
+    var sideLinks = document.querySelectorAll('.sidenav-link');
+    var sections  = document.querySelectorAll('section[id]');
+    var navbar    = document.getElementById('navbar');
 
+    if (!sideLinks.length) return;
+
+    /* ── Active section tracker ── */
+    function updateActive() {
+      var scrollY  = window.scrollY;
+      var navH     = navbar ? navbar.offsetHeight : 70;
+      var current  = sections.length ? sections[0].getAttribute('id') : '';
+
+      sections.forEach(function (sec) {
+        var secTop = sec.offsetTop - navH - 80;
+        if (scrollY >= secTop) {
+          current = sec.getAttribute('id');
+        }
+      });
+
+      sideLinks.forEach(function (link) {
+        var sec = link.getAttribute('data-section');
+        if (sec === current) {
+          link.classList.add('active');
+        } else {
+          link.classList.remove('active');
+        }
+      });
+    }
+
+    /* ── Smooth scroll on click ── */
+    sideLinks.forEach(function (link) {
+      link.addEventListener('click', function (e) {
+        e.preventDefault();
+        var id     = link.getAttribute('href').replace('#', '');
+        var target = document.getElementById(id);
+        if (!target) return;
+
+        var navH = navbar ? navbar.offsetHeight : 70;
+        var top  = target.offsetTop - navH;
+
+        window.scrollTo({ top: top, behavior: 'smooth' });
+
+        /* Set active immediately on click */
+        sideLinks.forEach(function (l) { l.classList.remove('active'); });
+        link.classList.add('active');
+      });
+    });
+
+    /* ── Listen to scroll ── */
+    window.addEventListener('scroll', updateActive, { passive: true });
+
+    /* Run once immediately */
+    updateActive();
+  }
+
+  /* Init after DOM is ready */
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initSideNav);
+  } else {
+    initSideNav();
+  }
+
+})();
