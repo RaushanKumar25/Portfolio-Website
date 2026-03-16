@@ -603,268 +603,188 @@ rpItems.forEach(function (item, i) {
 
 
 
-
-
 /* ════════════════════════════════════════
-   CONTACT SECTION — EmailJS + Validation + Toast
+   CONTACT SECTION — EmailJS Full Fix
 ════════════════════════════════════════ */
 
-/* ── STEP 1: Load EmailJS SDK ──
-   Add this to your <head> in index.html:
-   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+var EMAILJS_PUBLIC_KEY  = '2wz-D-KNNxPzO4ujf';
+var EMAILJS_SERVICE_ID  = 'service_7w8hf7a';
+var EMAILJS_TEMPLATE_ID = 'template_c9jgohr';
 
-   Then replace these with your real values from emailjs.com:
-   - YOUR_PUBLIC_KEY   → Account → API Keys → Public Key
-   - YOUR_SERVICE_ID   → Email Services → your service ID
-   - YOUR_TEMPLATE_ID  → Email Templates → your template ID
+/* ── Init EmailJS immediately when script loads ── */
+function initEmailJS() {
+  if (typeof emailjs !== 'undefined') {
+    emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
+    return true;
+  }
+  return false;
+}
 
-   In your EmailJS template, use these variables:
-   {{from_name}}    → sender name
-   {{from_email}}   → sender email
-   {{subject}}      → subject
-   {{message}}      → message body
-   {{to_email}}     → raushankumarbhardwaj4510@gmail.com (set as static in template)
-*/
+function getField(id) { return document.getElementById(id); }
 
-(function () {
+function setError(fieldId, show) {
+  var field = getField(fieldId);
+  var wrap  = field ? field.closest('.con-field-wrap') : null;
+  if (!wrap) return;
+  show ? wrap.classList.add('has-error') : wrap.classList.remove('has-error');
+}
 
-  /* ── Config — replace with your real keys ── */
-  var EMAILJS_PUBLIC_KEY  = 'YOUR_PUBLIC_KEY';
-  var EMAILJS_SERVICE_ID  = 'YOUR_SERVICE_ID';
-  var EMAILJS_TEMPLATE_ID = 'YOUR_TEMPLATE_ID';
+function validateEmail(email) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
 
-  /* ── Init EmailJS when SDK is ready ── */
-  function initEmailJS() {
-    if (typeof emailjs !== 'undefined') {
-      emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
-      return true;
-    }
-    return false;
+function validateForm() {
+  var valid = true;
+  var name    = getField('con-name');
+  var email   = getField('con-email');
+  var subject = getField('con-subject');
+  var message = getField('con-message');
+
+  if (!name || name.value.trim().length < 2)            { setError('con-name',    true); valid = false; }
+  else                                                   { setError('con-name',    false); }
+  if (!email || !validateEmail(email.value.trim()))      { setError('con-email',   true); valid = false; }
+  else                                                   { setError('con-email',   false); }
+  if (!subject || subject.value.trim().length < 2)       { setError('con-subject', true); valid = false; }
+  else                                                   { setError('con-subject', false); }
+  if (!message || message.value.trim().length < 5)       { setError('con-message', true); valid = false; }
+  else                                                   { setError('con-message', false); }
+
+  return valid;
+}
+
+function showToast(id, duration) {
+  var toast = document.getElementById(id);
+  if (!toast) return;
+  document.querySelectorAll('.con-toast.active').forEach(function(t) {
+    t.classList.remove('active');
+  });
+  toast.classList.add('active');
+  setTimeout(function() { toast.classList.remove('active'); }, duration || 5000);
+}
+
+function setLoading(loading) {
+  var submitBtn = document.getElementById('con-submit-btn');
+  var btnText   = submitBtn ? submitBtn.querySelector('.con-btn-text')   : null;
+  var btnLoad   = submitBtn ? submitBtn.querySelector('.con-btn-loading') : null;
+  if (!submitBtn) return;
+  submitBtn.disabled = loading;
+  if (btnText) btnText.style.display = loading ? 'none'        : 'inline-flex';
+  if (btnLoad) btnLoad.style.display = loading ? 'inline-flex' : 'none';
+}
+
+/* ── Main send function — called by both form submit AND button click ── */
+function sendContactForm() {
+  if (!validateForm()) return;
+
+  if (!initEmailJS()) {
+    alert('EmailJS not loaded. Make sure the EmailJS script tag is in your <head>.');
+    return;
   }
 
-  window.addEventListener('load', function () {
+  setLoading(true);
 
-    initEmailJS();
+  var templateParams = {
+    name    : getField('con-name').value.trim(),
+    email   : getField('con-email').value.trim(),
+    subject : getField('con-subject').value.trim(),
+    message : getField('con-message').value.trim(),
+    time    : new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })
+  };
 
-    var form      = document.getElementById('con-form');
-    var submitBtn = document.getElementById('con-submit-btn');
-    var btnText   = submitBtn ? submitBtn.querySelector('.con-btn-text')    : null;
-    var btnLoad   = submitBtn ? submitBtn.querySelector('.con-btn-loading')  : null;
-
-    /* ── Mouse glow on form wrap ── */
-    var formWrap = document.querySelector('.con-form-wrap');
-    if (formWrap) {
-      formWrap.addEventListener('mousemove', function (e) {
-        var rect = formWrap.getBoundingClientRect();
-        formWrap.style.setProperty('--mx', ((e.clientX - rect.left) / rect.width  * 100).toFixed(1) + '%');
-        formWrap.style.setProperty('--my', ((e.clientY - rect.top)  / rect.height * 100).toFixed(1) + '%');
+  emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams)
+    .then(function(response) {
+      console.log('SUCCESS', response);
+      setLoading(false);
+      showToast('con-toast-success', 6000);
+      /* Reset form */
+      var form = document.getElementById('con-form');
+      if (form) form.reset();
+      ['con-name','con-email','con-subject','con-message'].forEach(function(id) {
+        setError(id, false);
       });
-    }
-
-    /* ── Mouse glow on info + social cards ── */
-    document.querySelectorAll('.con-info-card, .con-social-card').forEach(function (card) {
-      card.addEventListener('mousemove', function (e) {
-        var rect = card.getBoundingClientRect();
-        card.style.setProperty('--mx', ((e.clientX - rect.left) / rect.width  * 100).toFixed(1) + '%');
-        card.style.setProperty('--my', ((e.clientY - rect.top)  / rect.height * 100).toFixed(1) + '%');
-      });
+    })
+    .catch(function(err) {
+      console.error('FAILED', err);
+      setLoading(false);
+      showToast('con-toast-error', 7000);
     });
+}
 
-    /* ── Scroll reveal ── */
-    var revealEls = document.querySelectorAll(
-      '.con-info-card, .con-social-card, .con-form-wrap'
-    );
+/* ── Attach everything after DOM is ready ── */
+document.addEventListener('DOMContentLoaded', function() {
 
-    revealEls.forEach(function (el, i) {
-      el.style.opacity   = '0';
-      el.style.transform = 'translateY(24px)';
-      el.style.transition = 'opacity 0.6s ease ' + (i * 0.08) + 's, transform 0.6s ease ' + (i * 0.08) + 's';
-    });
+  initEmailJS();
 
-    requestAnimationFrame(function () {
-      requestAnimationFrame(function () {
-        var io = new IntersectionObserver(function (entries) {
-          entries.forEach(function (entry) {
-            if (entry.isIntersecting) {
-              entry.target.style.opacity   = '1';
-              entry.target.style.transform = 'translateY(0)';
-              io.unobserve(entry.target);
-            }
-          });
-        }, { threshold: 0.1, rootMargin: '0px 0px -20px 0px' });
-
-        revealEls.forEach(function (el) { io.observe(el); });
-      });
-    });
-
-    /* ════════════════════
-       VALIDATION HELPERS
-    ════════════════════ */
-    function getField(id) { return document.getElementById(id); }
-
-    function setError(fieldId, errId, show) {
-      var field = getField(fieldId);
-      var wrap  = field ? field.closest('.con-field-wrap') : null;
-      if (wrap) {
-        show ? wrap.classList.add('has-error') : wrap.classList.remove('has-error');
-      }
-    }
-
-    function validateEmail(email) {
-      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-    }
-
-    function validateForm() {
-      var name    = getField('con-name');
-      var email   = getField('con-email');
-      var subject = getField('con-subject');
-      var message = getField('con-message');
-      var valid   = true;
-
-      /* Name */
-      if (!name || name.value.trim().length < 2) {
-        setError('con-name', 'err-name', true);
-        valid = false;
-      } else { setError('con-name', 'err-name', false); }
-
-      /* Email */
-      if (!email || !validateEmail(email.value.trim())) {
-        setError('con-email', 'err-email', true);
-        valid = false;
-      } else { setError('con-email', 'err-email', false); }
-
-      /* Subject */
-      if (!subject || subject.value.trim().length < 2) {
-        setError('con-subject', 'err-subject', true);
-        valid = false;
-      } else { setError('con-subject', 'err-subject', false); }
-
-      /* Message */
-      if (!message || message.value.trim().length < 10) {
-        setError('con-message', 'err-message', true);
-        valid = false;
-      } else { setError('con-message', 'err-message', false); }
-
-      return valid;
-    }
-
-    /* Clear error on input */
-    ['con-name','con-email','con-subject','con-message'].forEach(function (id) {
-      var el = getField(id);
-      if (el) {
-        el.addEventListener('input', function () {
-          setError(id, 'err-' + id.replace('con-', ''), false);
-        });
-      }
-    });
-
-    /* ════════════════════
-       TOAST HELPERS
-    ════════════════════ */
-    function showToast(id, duration) {
-      var toast = document.getElementById(id);
-      if (!toast) return;
-
-      /* Hide any currently active toasts */
-      document.querySelectorAll('.con-toast.active').forEach(function (t) {
-        t.classList.remove('active');
-      });
-
-      toast.classList.add('active');
-
-      setTimeout(function () {
-        toast.classList.remove('active');
-      }, duration || 5000);
-    }
-
-    /* ════════════════════
-       LOADING STATE
-    ════════════════════ */
-    function setLoading(loading) {
-      if (!submitBtn) return;
-      submitBtn.disabled = loading;
-      if (btnText) btnText.style.display = loading ? 'none'         : 'inline-flex';
-      if (btnLoad) btnLoad.style.display = loading ? 'inline-flex'  : 'none';
-    }
-
-    /* ════════════════════
-       FORM SUBMIT
-    ════════════════════ */
-    if (form) {
-      form.addEventListener('submit', function (e) {
-        e.preventDefault();
-
-        if (!validateForm()) return;
-
-        /* Try to init EmailJS if it wasn't ready on load */
-        if (!initEmailJS()) {
-          showToast('con-toast-error');
-          return;
-        }
-
-        setLoading(true);
-
-        var name    = getField('con-name').value.trim();
-        var email   = getField('con-email').value.trim();
-        var subject = getField('con-subject').value.trim();
-        var message = getField('con-message').value.trim();
-
-        var templateParams = {
-          from_name  : name,
-          from_email : email,
-          subject    : subject,
-          message    : message,
-          to_email   : 'raushankumarbhardwaj4510@gmail.com',
-          reply_to   : email
-        };
-
-        emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams)
-          .then(function () {
-            setLoading(false);
-            showToast('con-toast-success', 6000);
-            form.reset();
-            /* Clear any remaining errors */
-            ['con-name','con-email','con-subject','con-message'].forEach(function (id) {
-              setError(id, '', false);
-            });
-          })
-          .catch(function (err) {
-            console.error('EmailJS error:', err);
-            setLoading(false);
-            showToast('con-toast-error', 7000);
-          });
-      });
-    }
-
+  /* Clear errors on typing */
+  ['con-name','con-email','con-subject','con-message'].forEach(function(id) {
+    var el = getField(id);
+    if (el) el.addEventListener('input', function() { setError(id, false); });
   });
 
-})();
-```
+  /* Form submit event */
+  var form = document.getElementById('con-form');
+  if (form) {
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      sendContactForm();
+    });
+  }
 
----
+  /* Direct button click as backup */
+  var btn = document.getElementById('con-submit-btn');
+  if (btn) {
+    btn.addEventListener('click', function(e) {
+      var form = document.getElementById('con-form');
+      /* Only fire if button is outside a form OR form submit isn't working */
+      if (!form) {
+        e.preventDefault();
+        sendContactForm();
+      }
+    });
+  }
 
-**Setup steps for EmailJS** (takes 5 minutes):
+  /* ── Mouse glow ── */
+  var formWrap = document.querySelector('.con-form-wrap');
+  if (formWrap) {
+    formWrap.addEventListener('mousemove', function(e) {
+      var rect = formWrap.getBoundingClientRect();
+      formWrap.style.setProperty('--mx', ((e.clientX - rect.left) / rect.width  * 100).toFixed(1) + '%');
+      formWrap.style.setProperty('--my', ((e.clientY - rect.top)  / rect.height * 100).toFixed(1) + '%');
+    });
+  }
 
-1. Go to **[emailjs.com](https://www.emailjs.com)** → create free account
-2. **Email Services** → Add Service → choose Gmail → connect your Gmail → copy the **Service ID**
-3. **Email Templates** → Create Template → paste this template body:
-```
-// New message from your portfolio!
+  document.querySelectorAll('.con-info-card, .con-social-card').forEach(function(card) {
+    card.addEventListener('mousemove', function(e) {
+      var rect = card.getBoundingClientRect();
+      card.style.setProperty('--mx', ((e.clientX - rect.left) / rect.width  * 100).toFixed(1) + '%');
+      card.style.setProperty('--my', ((e.clientY - rect.top)  / rect.height * 100).toFixed(1) + '%');
+    });
+  });
 
-Name: {{from_name}}
-Email: {{from_email}}
-Subject: {{subject}}
+  /* ── Scroll reveal ── */
+  var revealEls = document.querySelectorAll('.con-info-card, .con-social-card, .con-form-wrap');
+  revealEls.forEach(function(el, i) {
+    el.style.opacity    = '0';
+    el.style.transform  = 'translateY(24px)';
+    el.style.transition = 'opacity 0.6s ease ' + (i * 0.08) + 's, transform 0.6s ease ' + (i * 0.08) + 's';
+  });
 
-Message:
-{{message}}
+  requestAnimationFrame(function() {
+    requestAnimationFrame(function() {
+      var io = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            entry.target.style.opacity   = '1';
+            entry.target.style.transform = 'translateY(0)';
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1 });
+      revealEls.forEach(function(el) { io.observe(el); });
+    });
+  });
 
-
-
-
-
-
-
-
+});
 
 /* ════════════════════════════════════════
    FOOTER — Scroll To Top + Smooth Scroll + Reveal
