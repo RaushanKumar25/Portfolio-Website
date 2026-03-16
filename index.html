@@ -67,6 +67,57 @@
 </div>
 
 
+<!-- ══ DAY/NIGHT TOGGLE ══════════════════ -->
+<div class="theme-toggle-wrap" id="theme-toggle-wrap">
+
+  <button class="theme-toggle-btn" id="theme-toggle-btn" aria-label="Toggle day/night mode">
+
+    <!-- Cloud layers -->
+    <div class="tog-clouds">
+      <div class="tog-cloud tog-cloud-1"></div>
+      <div class="tog-cloud tog-cloud-2"></div>
+      <div class="tog-cloud tog-cloud-3"></div>
+    </div>
+
+    <!-- Sun -->
+    <div class="tog-sun" id="tog-sun">
+      <div class="tog-sun-core"></div>
+      <div class="tog-sun-rays">
+        <span></span><span></span><span></span><span></span>
+        <span></span><span></span><span></span><span></span>
+      </div>
+    </div>
+
+    <!-- Moon -->
+    <div class="tog-moon" id="tog-moon">
+      <div class="tog-moon-core"></div>
+      <div class="tog-moon-craters">
+        <span class="tog-crater tog-crater-1"></span>
+        <span class="tog-crater tog-crater-2"></span>
+        <span class="tog-crater tog-crater-3"></span>
+      </div>
+      <!-- Stars around moon -->
+      <div class="tog-moon-stars">
+        <span class="tog-mstar tog-mstar-1"></span>
+        <span class="tog-mstar tog-mstar-2"></span>
+        <span class="tog-mstar tog-mstar-3"></span>
+      </div>
+    </div>
+
+    <!-- Track label -->
+    <div class="tog-track">
+      <span class="tog-track-night">🌙</span>
+      <span class="tog-track-day">☀️</span>
+    </div>
+
+  </button>
+
+  <!-- Tooltip -->
+  <div class="tog-tooltip" id="tog-tooltip">Switch to Day Mode</div>
+
+</div>
+
+
   <canvas id="hero-canvas"></canvas>
   <div class="noise"></div>
   <div class="glow-orb glow-orb-1"></div>

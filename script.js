@@ -1554,3 +1554,69 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
 })();
+
+
+
+
+/* ════════════════════════════════════════
+   DAY / NIGHT TOGGLE
+════════════════════════════════════════ */
+(function () {
+
+  var btn      = document.getElementById('theme-toggle-btn');
+  var tooltip  = document.getElementById('tog-tooltip');
+  var body     = document.body;
+  var isDayMode = false;
+
+  if (!btn) return;
+
+  /* ── Apply saved preference ── */
+  if (localStorage.getItem('themeMode') === 'day') {
+    isDayMode = true;
+    body.classList.add('day-mode');
+    updateTooltip();
+  }
+
+  /* ── Toggle on click ── */
+  btn.addEventListener('click', function () {
+    isDayMode = !isDayMode;
+
+    /* Show clouds animation */
+    btn.classList.add('tog-animating');
+
+    /* Short delay then switch mode — feels like clouds covering then revealing */
+    setTimeout(function () {
+      if (isDayMode) {
+        body.classList.add('day-mode');
+        localStorage.setItem('themeMode', 'day');
+      } else {
+        body.classList.remove('day-mode');
+        localStorage.setItem('themeMode', 'night');
+      }
+      updateTooltip();
+    }, 280);
+
+    /* Remove cloud animation class after it finishes */
+    setTimeout(function () {
+      btn.classList.remove('tog-animating');
+    }, 900);
+  });
+
+  /* ── Tooltip text ── */
+  function updateTooltip() {
+    if (!tooltip) return;
+    tooltip.textContent = isDayMode
+      ? 'Switch to Night Mode'
+      : 'Switch to Day Mode';
+  }
+
+  updateTooltip();
+
+  /* ── Sun ray CSS variable fix for animation ── */
+  var rays = document.querySelectorAll('.tog-sun-rays span');
+  var angles = [0,45,90,135,180,225,270,315];
+  rays.forEach(function (ray, i) {
+    ray.style.setProperty('--r', angles[i] + 'deg');
+  });
+
+})();

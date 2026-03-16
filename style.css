@@ -5458,3 +5458,489 @@ a.con-info-value:hover { color: #4af0c4; }
 }
 
 
+
+
+
+
+/* ════════════════════════════════════════
+   DAY / NIGHT TOGGLE
+════════════════════════════════════════ */
+
+/* ── Wrap — fixed top right ── */
+.theme-toggle-wrap {
+  position: fixed;
+  top: 18px;
+  right: 100px;
+  z-index: 10000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+/* ── Button ── */
+.theme-toggle-btn {
+  position: relative;
+  width: 72px;
+  height: 36px;
+  border-radius: 100px;
+  border: none;
+  cursor: pointer;
+  overflow: hidden;
+  padding: 0;
+  outline: none;
+  transition: box-shadow 0.4s;
+
+  /* Night sky default */
+  background: linear-gradient(135deg, #0a0e1a 0%, #1a2240 50%, #0d1535 100%);
+  box-shadow:
+    0 0 0 1.5px rgba(74,240,196,0.3),
+    0 4px 20px rgba(0,0,0,0.5);
+}
+
+.theme-toggle-btn:hover {
+  box-shadow:
+    0 0 0 2px rgba(74,240,196,0.5),
+    0 6px 28px rgba(0,0,0,0.5);
+}
+
+/* Day mode button bg */
+body.day-mode .theme-toggle-btn {
+  background: linear-gradient(135deg, #87ceeb 0%, #5bb8f5 40%, #ffd700 100%);
+  box-shadow:
+    0 0 0 1.5px rgba(255,200,50,0.5),
+    0 4px 20px rgba(255,160,30,0.35);
+}
+
+/* ── Track (emoji labels) ── */
+.tog-track {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 8px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.tog-track-night,
+.tog-track-day {
+  font-size: 13px;
+  line-height: 1;
+  transition: opacity 0.4s;
+}
+
+.tog-track-night { opacity: 0.9; }
+.tog-track-day   { opacity: 0.4; }
+
+body.day-mode .tog-track-night { opacity: 0.4; }
+body.day-mode .tog-track-day   { opacity: 0.9; }
+
+/* ── CLOUDS ── */
+.tog-clouds {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.tog-cloud {
+  position: absolute;
+  background: rgba(255,255,255,0.85);
+  border-radius: 100px;
+}
+
+/* Cloud 1 — main center */
+.tog-cloud-1 {
+  width: 36px; height: 14px;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%) translateY(40px);
+  transition: transform 0.6s cubic-bezier(0.22,1,0.36,1), opacity 0.5s;
+  opacity: 0;
+}
+
+.tog-cloud-1::before {
+  content: '';
+  position: absolute;
+  width: 18px; height: 18px;
+  background: rgba(255,255,255,0.85);
+  border-radius: 50%;
+  top: -8px; left: 6px;
+}
+
+.tog-cloud-1::after {
+  content: '';
+  position: absolute;
+  width: 13px; height: 13px;
+  background: rgba(255,255,255,0.85);
+  border-radius: 50%;
+  top: -5px; left: 16px;
+}
+
+/* Cloud 2 — left accent */
+.tog-cloud-2 {
+  width: 20px; height: 8px;
+  top: 30%; left: 8%;
+  transform: translateY(30px);
+  transition: transform 0.5s cubic-bezier(0.22,1,0.36,1) 0.05s, opacity 0.5s 0.05s;
+  opacity: 0;
+}
+
+.tog-cloud-2::before {
+  content: '';
+  position: absolute;
+  width: 10px; height: 10px;
+  background: rgba(255,255,255,0.75);
+  border-radius: 50%;
+  top: -5px; left: 3px;
+}
+
+/* Cloud 3 — right accent */
+.tog-cloud-3 {
+  width: 16px; height: 7px;
+  top: 55%; right: 10%;
+  transform: translateY(30px);
+  transition: transform 0.5s cubic-bezier(0.22,1,0.36,1) 0.1s, opacity 0.5s 0.1s;
+  opacity: 0;
+}
+
+.tog-cloud-3::before {
+  content: '';
+  position: absolute;
+  width: 9px; height: 9px;
+  background: rgba(255,255,255,0.75);
+  border-radius: 50%;
+  top: -4px; left: 3px;
+}
+
+/* Cloud animation — show clouds on toggle transition */
+.theme-toggle-btn.tog-animating .tog-cloud-1 {
+  transform: translate(-50%, -50%) translateY(0px);
+  opacity: 1;
+}
+
+.theme-toggle-btn.tog-animating .tog-cloud-2 {
+  transform: translateY(0px);
+  opacity: 0.8;
+}
+
+.theme-toggle-btn.tog-animating .tog-cloud-3 {
+  transform: translateY(0px);
+  opacity: 0.7;
+}
+
+/* ── SUN ── */
+.tog-sun {
+  position: absolute;
+  top: 50%;
+  left: 8px;
+  transform: translateY(-50%) translateY(50px);
+  width: 26px; height: 26px;
+  z-index: 3;
+  pointer-events: none;
+  transition: transform 0.7s cubic-bezier(0.22,1,0.36,1) 0.15s,
+              opacity 0.5s 0.15s;
+  opacity: 0;
+}
+
+body.day-mode .tog-sun {
+  transform: translateY(-50%) translateY(0px);
+  opacity: 1;
+}
+
+.tog-sun-core {
+  width: 100%; height: 100%;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #fff7a0, #ffe066 40%, #ffb020);
+  box-shadow:
+    0 0 8px 3px rgba(255,210,50,0.7),
+    0 0 16px 6px rgba(255,160,30,0.4);
+}
+
+.tog-sun-rays {
+  position: absolute;
+  inset: -8px;
+}
+
+.tog-sun-rays span {
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 3px; height: 8px;
+  background: rgba(255,220,60,0.8);
+  border-radius: 2px;
+  transform-origin: 50% 100%;
+}
+
+.tog-sun-rays span:nth-child(1) { transform: translate(-50%,-100%) rotate(0deg)   translateY(-14px); }
+.tog-sun-rays span:nth-child(2) { transform: translate(-50%,-100%) rotate(45deg)  translateY(-14px); }
+.tog-sun-rays span:nth-child(3) { transform: translate(-50%,-100%) rotate(90deg)  translateY(-14px); }
+.tog-sun-rays span:nth-child(4) { transform: translate(-50%,-100%) rotate(135deg) translateY(-14px); }
+.tog-sun-rays span:nth-child(5) { transform: translate(-50%,-100%) rotate(180deg) translateY(-14px); }
+.tog-sun-rays span:nth-child(6) { transform: translate(-50%,-100%) rotate(225deg) translateY(-14px); }
+.tog-sun-rays span:nth-child(7) { transform: translate(-50%,-100%) rotate(270deg) translateY(-14px); }
+.tog-sun-rays span:nth-child(8) { transform: translate(-50%,-100%) rotate(315deg) translateY(-14px); }
+
+body.day-mode .tog-sun-rays span {
+  animation: togSunRay 2s ease-in-out infinite;
+}
+
+@keyframes togSunRay {
+  0%,100% { opacity: 0.8; transform: translate(-50%,-100%) rotate(var(--r)) translateY(-14px) scaleY(1);   }
+  50%      { opacity: 1;   transform: translate(-50%,-100%) rotate(var(--r)) translateY(-16px) scaleY(1.2); }
+}
+
+.tog-sun-rays span:nth-child(1) { --r: 0deg;   animation-delay: 0s;     }
+.tog-sun-rays span:nth-child(2) { --r: 45deg;  animation-delay: 0.1s;   }
+.tog-sun-rays span:nth-child(3) { --r: 90deg;  animation-delay: 0.2s;   }
+.tog-sun-rays span:nth-child(4) { --r: 135deg; animation-delay: 0.3s;   }
+.tog-sun-rays span:nth-child(5) { --r: 180deg; animation-delay: 0.4s;   }
+.tog-sun-rays span:nth-child(6) { --r: 225deg; animation-delay: 0.5s;   }
+.tog-sun-rays span:nth-child(7) { --r: 270deg; animation-delay: 0.6s;   }
+.tog-sun-rays span:nth-child(8) { --r: 315deg; animation-delay: 0.7s;   }
+
+/* ── MOON ── */
+.tog-moon {
+  position: absolute;
+  top: 50%;
+  right: 8px;
+  transform: translateY(-50%) translateY(0px);
+  width: 24px; height: 24px;
+  z-index: 3;
+  pointer-events: none;
+  transition: transform 0.7s cubic-bezier(0.22,1,0.36,1) 0.15s,
+              opacity 0.5s 0.15s;
+  opacity: 1;
+}
+
+body.day-mode .tog-moon {
+  transform: translateY(-50%) translateY(50px);
+  opacity: 0;
+}
+
+.tog-moon-core {
+  width: 100%; height: 100%;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #f0f0d0, #d8d0a0 40%, #b0a870);
+  box-shadow:
+    0 0 6px 2px rgba(220,210,150,0.5),
+    0 0 14px 5px rgba(180,170,100,0.25),
+    inset -4px -2px 8px rgba(0,0,0,0.25);
+}
+
+/* Craters */
+.tog-moon-craters {
+  position: absolute;
+  inset: 0;
+}
+
+.tog-crater {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(0,0,0,0.12);
+  box-shadow: inset 1px 1px 2px rgba(255,255,255,0.1);
+}
+
+.tog-crater-1 { width:6px; height:6px; top:20%; left:25%; }
+.tog-crater-2 { width:4px; height:4px; top:55%; left:55%; }
+.tog-crater-3 { width:3px; height:3px; top:35%; left:65%; }
+
+/* Stars near moon */
+.tog-moon-stars {
+  position: absolute;
+  inset: -12px;
+  pointer-events: none;
+}
+
+.tog-mstar {
+  position: absolute;
+  border-radius: 50%;
+  background: white;
+  animation: togMstarTwinkle 2s ease-in-out infinite;
+}
+
+.tog-mstar-1 { width:2px; height:2px; top:0;   left:10%;  animation-delay:0s;    }
+.tog-mstar-2 { width:2px; height:2px; top:30%; left:-5%;  animation-delay:0.5s;  }
+.tog-mstar-3 { width:1px; height:1px; top:10%; left:-10%; animation-delay:1s;    }
+
+@keyframes togMstarTwinkle {
+  0%,100% { opacity:0.8; transform:scale(1);   }
+  50%      { opacity:0.2; transform:scale(0.5); }
+}
+
+/* ── TOOLTIP ── */
+.tog-tooltip {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: rgba(255,255,255,0.7);
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateY(-4px);
+  transition: opacity 0.3s, transform 0.3s;
+  pointer-events: none;
+  text-align: center;
+}
+
+.theme-toggle-wrap:hover .tog-tooltip {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ════════════════════════════════════════
+   DAY MODE — full site overrides
+════════════════════════════════════════ */
+
+/* Smooth transition on everything */
+body {
+  transition: background-color 0.8s ease, color 0.8s ease;
+}
+
+/* ── Body + background ── */
+body.day-mode {
+  background-color: #f0f4ff;
+  color: #1a2040;
+}
+
+/* ── Canvas overlay for day mode ── */
+body.day-mode #hero-canvas {
+  opacity: 0.08;
+  transition: opacity 0.8s;
+}
+
+#hero-canvas {
+  opacity: 1;
+  transition: opacity 0.8s;
+}
+
+/* ── Day sky behind hero ── */
+body.day-mode #home {
+  background: linear-gradient(
+    180deg,
+    #87ceeb 0%,
+    #b0ddf5 30%,
+    #d4eeff 60%,
+    #f0f8ff 100%
+  );
+  transition: background 0.8s;
+}
+
+/* ── Text colors in day mode ── */
+body.day-mode .hero-greeting,
+body.day-mode .hero-name,
+body.day-mode .hero-role-line,
+body.day-mode .hero-desc,
+body.day-mode .about-heading,
+body.day-mode .skills-heading,
+body.day-mode .proj-heading,
+body.day-mode .cert-heading,
+body.day-mode .exp-heading,
+body.day-mode .edu-heading,
+body.day-mode .con-heading,
+body.day-mode .footer-logo-name {
+  color: #1a2040;
+}
+
+/* ── Glassmorphism cards in day mode ── */
+body.day-mode .about-card,
+body.day-mode .skills-card,
+body.day-mode .proj-card,
+body.day-mode .cert-card,
+body.day-mode .exp-card,
+body.day-mode .edu-card,
+body.day-mode .con-info-card,
+body.day-mode .con-form-wrap,
+body.day-mode .con-social-card,
+body.day-mode .footer-social-item {
+  background: rgba(255,255,255,0.75) !important;
+  border-color: rgba(100,140,255,0.2) !important;
+  box-shadow: 0 4px 24px rgba(100,140,255,0.12) !important;
+  backdrop-filter: blur(12px) !important;
+}
+
+/* ── Section backgrounds ── */
+body.day-mode #about,
+body.day-mode #skills,
+body.day-mode #projects,
+body.day-mode #certificates,
+body.day-mode #experience,
+body.day-mode #education,
+body.day-mode #contact {
+  background: linear-gradient(180deg, #f0f4ff 0%, #e8f0ff 100%);
+  transition: background 0.8s;
+}
+
+/* ── Navbar in day mode ── */
+body.day-mode .navbar.nav-scrolled {
+  background: rgba(240,244,255,0.9) !important;
+  box-shadow: 0 1px 0 rgba(100,140,255,0.15), 0 8px 32px rgba(100,140,255,0.12) !important;
+}
+
+body.day-mode .nav-link { color: #3a4a70 !important; }
+body.day-mode .nav-link.active { color: #1a6aff !important; }
+body.day-mode .nav-link-dot { background: #1a6aff !important; }
+body.day-mode .nav-logo-name { color: #1a2040 !important; }
+
+/* ── Inputs in day mode ── */
+body.day-mode .con-input {
+  background: rgba(255,255,255,0.9) !important;
+  border-color: rgba(100,140,255,0.25) !important;
+  color: #1a2040 !important;
+}
+
+body.day-mode .con-label,
+body.day-mode .con-info-label,
+body.day-mode .con-form-subtitle,
+body.day-mode .con-subheading,
+body.day-mode .edu-subheading,
+body.day-mode .proj-desc,
+body.day-mode .about-desc {
+  color: #4a5a80 !important;
+}
+
+/* ── Footer in day mode ── */
+body.day-mode #footer {
+  background: rgba(225,232,255,0.95) !important;
+  border-top-color: rgba(100,140,255,0.18) !important;
+}
+
+body.day-mode .footer-copy,
+body.day-mode .footer-made-with,
+body.day-mode .footer-link,
+body.day-mode .footer-social-name {
+  color: #3a4a70 !important;
+}
+
+/* ── Accent colors stay teal/blue ── */
+body.day-mode .nav-logo-bracket,
+body.day-mode .edu-heading em,
+body.day-mode .con-heading em,
+body.day-mode .about-heading em {
+  color: #0066cc !important;
+  -webkit-text-fill-color: #0066cc !important;
+}
+
+/* ── Sidenav in day mode ── */
+body.day-mode .sidenav-inner {
+  background: rgba(240,244,255,0.92) !important;
+  border-color: rgba(100,140,255,0.22) !important;
+}
+
+body.day-mode .sidenav-link { color: #4a5a80 !important; }
+body.day-mode .sidenav-link.active { color: #1a6aff !important; }
+
+/* ── Scroll bar in day mode ── */
+body.day-mode::-webkit-scrollbar-thumb {
+  background: rgba(100,140,255,0.35);
+}
+
+/* ── Mobile toggle position fix ── */
+@media (max-width: 640px) {
+  .theme-toggle-wrap {
+    top: 14px;
+    right: 68px;
+  }
+}
+
+
