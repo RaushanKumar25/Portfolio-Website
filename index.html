@@ -12,6 +12,132 @@
 
 </head>
 <body>
+
+  <!-- ══ ROCKET LOADER ══════════════════════════ -->
+<div class="rl-wrap" id="rl-wrap">
+  <canvas class="rl-canvas" id="rl-canvas"></canvas>
+
+  <!-- Corner brackets -->
+  <div class="rl-corner rl-tl"></div>
+  <div class="rl-corner rl-tr"></div>
+  <div class="rl-corner rl-bl"></div>
+  <div class="rl-corner rl-br"></div>
+
+  <!-- HUD top bar -->
+  <div class="rl-hud-top">
+    <div class="rl-hud-left">
+      <span class="rl-hud-dot"></span>
+      <span class="rl-hud-label">LAUNCH SEQUENCE</span>
+    </div>
+    <div class="rl-hud-right">
+      <span class="rl-hud-label">MISSION: PORTFOLIO.EXE</span>
+      <span class="rl-hud-dot"></span>
+    </div>
+  </div>
+
+  <!-- Center content -->
+  <div class="rl-center" id="rl-center">
+
+    <!-- Altitude meter left -->
+    <div class="rl-altitude">
+      <div class="rl-alt-label">ALT</div>
+      <div class="rl-alt-track">
+        <div class="rl-alt-fill" id="rl-alt-fill"></div>
+        <div class="rl-alt-marker" id="rl-alt-marker"></div>
+      </div>
+      <div class="rl-alt-val" id="rl-alt-val">0 km</div>
+    </div>
+
+    <!-- Main display -->
+    <div class="rl-main">
+
+      <!-- Status line -->
+      <div class="rl-status-row">
+        <div class="rl-status-dot" id="rl-status-dot"></div>
+        <span class="rl-status-text" id="rl-status-text">PRE-LAUNCH</span>
+      </div>
+
+      <!-- Name -->
+      <div class="rl-name" id="rl-name">
+        <span class="rl-nb">&lt;</span>
+        <span class="rl-nt">Raushan Kumar</span>
+        <span class="rl-ns">/</span>
+        <span class="rl-nb">&gt;</span>
+      </div>
+
+      <!-- Role -->
+      <div class="rl-role">Aspiring Cloud Engineer</div>
+
+      <!-- Progress bar -->
+      <div class="rl-bar-wrap">
+        <div class="rl-bar-track">
+          <div class="rl-bar-fill" id="rl-bar-fill">
+            <div class="rl-bar-shine"></div>
+          </div>
+          <div class="rl-bar-segments">
+            <span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span>
+          </div>
+        </div>
+        <div class="rl-bar-row">
+          <span class="rl-bar-msg" id="rl-bar-msg">Fueling engines...</span>
+          <span class="rl-bar-pct" id="rl-bar-pct">0%</span>
+        </div>
+      </div>
+
+      <!-- Stats row -->
+      <div class="rl-stats">
+        <div class="rl-stat">
+          <div class="rl-stat-val" id="rl-stat-speed">0</div>
+          <div class="rl-stat-label">km/s</div>
+        </div>
+        <div class="rl-stat-div"></div>
+        <div class="rl-stat">
+          <div class="rl-stat-val" id="rl-stat-temp">288</div>
+          <div class="rl-stat-label">K temp</div>
+        </div>
+        <div class="rl-stat-div"></div>
+        <div class="rl-stat">
+          <div class="rl-stat-val" id="rl-stat-fuel">100</div>
+          <div class="rl-stat-label">% fuel</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Velocity meter right -->
+    <div class="rl-velocity">
+      <div class="rl-alt-label">VEL</div>
+      <div class="rl-alt-track">
+        <div class="rl-alt-fill rl-vel-fill" id="rl-vel-fill"></div>
+        <div class="rl-alt-marker" id="rl-vel-marker"></div>
+      </div>
+      <div class="rl-alt-val" id="rl-vel-val">0 m/s</div>
+    </div>
+
+  </div>
+
+  <!-- Quote overlay — shown at end -->
+  <div class="rl-quote-overlay" id="rl-quote-overlay">
+    <div class="rl-quote-wrap">
+      <div class="rl-quote-name" id="rl-quote-name">Raushan Kumar</div>
+      <div class="rl-quote-title">Cloud Engineer</div>
+      <div class="rl-quote-divider"></div>
+      <div class="rl-quote-text" id="rl-quote-text"></div>
+      <div class="rl-quote-author" id="rl-quote-author"></div>
+      <button class="rl-quote-btn" id="rl-quote-btn">
+        Enter Portfolio
+        <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+          <path d="M5 12h14M12 5l7 7-7 7"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+</div>
+
+
 <!-- ══ SIDE NAV ══════════════════════════ -->
 <div class="sidenav" id="sidenav">
   <div class="sidenav-inner">

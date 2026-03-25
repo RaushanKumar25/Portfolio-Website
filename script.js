@@ -1623,3 +1623,965 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
+/* ════════════════════════════════════════
+   JOURNEY LOADER — Student to Engineer
+════════════════════════════════════════ */
+(function () {
+
+  var wrap        = document.getElementById('loader-wrap');
+  var progressFill = document.getElementById('loader-progress-fill');
+  var progressMsg  = document.getElementById('loader-progress-msg');
+  var progressPct  = document.getElementById('loader-progress-pct');
+  var stageTag     = document.getElementById('loader-stage-tag');
+  var quoteEl      = document.getElementById('loader-quote');
+  var ljFill       = document.getElementById('lj-fill');
+
+  if (!wrap) return;
+
+  document.body.classList.add('loading');
+
+  /* ══════════════════════════════════════
+     CONFIG
+  ══════════════════════════════════════ */
+
+  var stages = [
+    { id: 0, label: 'Student',   stepId: 'lj-step-1', pct: 0   },
+    { id: 1, label: 'Developer', stepId: 'lj-step-2', pct: 25  },
+    { id: 2, label: 'Coder',     stepId: 'lj-step-3', pct: 50  },
+    { id: 3, label: 'Cloud Dev', stepId: 'lj-step-4', pct: 75  },
+    { id: 4, label: 'Engineer',  stepId: 'lj-step-5', pct: 100 }
+  ];
+
+  var quotes = [
+    '"Every expert was once a beginner."',
+    '"First, solve the problem. Then, write the code."',
+    '"Code is poetry written in logic."',
+    '"The cloud is just someone else\'s computer — until you master it."',
+    '"From student to engineer — the journey makes the difference."'
+  ];
+
+  var messages = [
+    'Starting the journey...',
+    'Learning to code...',
+    'Building projects...',
+    'Mastering the cloud...',
+    'Becoming an engineer! 🚀'
+  ];
+
+  /* ══════════════════════════════════════
+     STATE
+  ══════════════════════════════════════ */
+  var currentStage = -1;
+  var currentPct   = 0;
+  var targetPct    = 0;
+  var done         = false;
+
+  /* ══════════════════════════════════════
+     PROGRESS COUNTER
+  ══════════════════════════════════════ */
+  function tickProgress() {
+    if (done) return;
+    if (currentPct < targetPct) {
+      currentPct = Math.min(currentPct + 0.8, targetPct);
+      var pct = Math.round(currentPct);
+      if (progressFill) progressFill.style.width = currentPct + '%';
+      if (progressPct)  progressPct.textContent   = pct + '%';
+      if (ljFill)       ljFill.style.width         = currentPct + '%';
+    }
+    requestAnimationFrame(tickProgress);
+  }
+
+  requestAnimationFrame(tickProgress);
+
+  /* ══════════════════════════════════════
+     ACTIVATE STAGE
+  ══════════════════════════════════════ */
+  function activateStage(index) {
+    if (index === currentStage) return;
+
+    /* Exit old avatar stage */
+    if (currentStage >= 0) {
+      var oldStage = document.getElementById('ls-' + currentStage);
+      if (oldStage) {
+        oldStage.classList.remove('ls-active');
+        oldStage.classList.add('ls-exit');
+        setTimeout(function () {
+          oldStage.classList.remove('ls-exit');
+        }, 500);
+      }
+    }
+
+    currentStage = index;
+    var s = stages[index];
+
+    /* Activate new avatar stage */
+    var newStage = document.getElementById('ls-' + index);
+    if (newStage) {
+      setTimeout(function () {
+        newStage.classList.add('ls-active');
+      }, 120);
+    }
+
+    /* Update journey step indicators */
+    stages.forEach(function (st, i) {
+      var stepEl = document.getElementById(st.stepId);
+      if (!stepEl) return;
+      stepEl.classList.remove('lj-active', 'lj-done');
+      if (i < index)      stepEl.classList.add('lj-done');
+      else if (i === index) stepEl.classList.add('lj-active');
+    });
+
+    /* Update stage tag */
+    if (stageTag) {
+      stageTag.style.opacity = '0';
+      stageTag.style.transform = 'translateY(6px)';
+      setTimeout(function () {
+        stageTag.textContent = s.label;
+        stageTag.style.transition = 'opacity 0.4s, transform 0.4s';
+        stageTag.style.opacity = '1';
+        stageTag.style.transform = 'translateY(0)';
+      }, 200);
+    }
+
+    /* Update quote */
+    if (quoteEl) {
+      quoteEl.classList.add('lq-fade');
+      setTimeout(function () {
+        quoteEl.textContent = quotes[index];
+        quoteEl.classList.remove('lq-fade');
+      }, 300);
+    }
+
+    /* Update progress message */
+    if (progressMsg) {
+      setTimeout(function () {
+        progressMsg.textContent = messages[index];
+      }, 150);
+    }
+
+    /* Set target progress */
+    targetPct = s.pct;
+  }
+
+  /* ══════════════════════════════════════
+     RUN TIMELINE
+  ══════════════════════════════════════ */
+  var timeline = [
+    { time: 300,  stage: 0 },
+    { time: 1400, stage: 1 },
+    { time: 2600, stage: 2 },
+    { time: 3800, stage: 3 },
+    { time: 5000, stage: 4 }
+  ];
+
+  timeline.forEach(function (step) {
+    setTimeout(function () {
+      activateStage(step.stage);
+    }, step.time);
+  });
+
+  /* ══════════════════════════════════════
+     HIDE LOADER
+  ══════════════════════════════════════ */
+  setTimeout(function () {
+    done = true;
+    targetPct = 100;
+    currentPct = 100;
+    if (progressFill) progressFill.style.width = '100%';
+    if (progressPct)  progressPct.textContent   = '100%';
+    if (ljFill)       ljFill.style.width         = '100%';
+
+    /* Short pause on engineer stage then exit */
+    setTimeout(function () {
+      wrap.classList.add('loader-done');
+      document.body.classList.remove('loading');
+      setTimeout(function () {
+        if (wrap && wrap.parentNode) {
+          wrap.parentNode.removeChild(wrap);
+        }
+      }, 1100);
+    }, 900);
+
+  }, 6000);
+
+  /* ══════════════════════════════════════
+     BACKGROUND CANVAS PARTICLES
+  ══════════════════════════════════════ */
+  (function () {
+    var canvas = document.getElementById('loader-canvas');
+    if (!canvas) return;
+    var ctx = canvas.getContext('2d');
+    var W, H, pts = [];
+
+    function resize() {
+      W = canvas.width  = window.innerWidth;
+      H = canvas.height = window.innerHeight;
+    }
+
+    resize();
+    window.addEventListener('resize', resize);
+
+    for (var i = 0; i < 100; i++) {
+      pts.push({
+        x: Math.random() * window.innerWidth,
+        y: Math.random() * window.innerHeight,
+        r: Math.random() * 1.3 + 0.2,
+        alpha: Math.random() * 0.45 + 0.08,
+        vx: (Math.random() - 0.5) * 0.22,
+        vy: (Math.random() - 0.5) * 0.22,
+        twinkle: Math.random() * Math.PI * 2,
+        twinkleSpeed: 0.018 + Math.random() * 0.028,
+        hue: Math.random() > 0.75 ? 160 + Math.random()*50 : -1
+      });
+    }
+
+    function drawBg() {
+      if (!wrap.parentNode) return;
+      ctx.clearRect(0, 0, W, H);
+
+      for (var i = 0; i < pts.length; i++) {
+        var p = pts[i];
+        p.x += p.vx; p.y += p.vy;
+        if (p.x < 0) p.x = W;
+        if (p.x > W) p.x = 0;
+        if (p.y < 0) p.y = H;
+        if (p.y > H) p.y = 0;
+
+        p.twinkle += p.twinkleSpeed;
+        var tw    = 0.5 + 0.5 * Math.sin(p.twinkle);
+        var alpha = p.alpha * (0.5 + 0.5 * tw);
+        var r     = p.r    * (0.8 + 0.4 * tw);
+
+        /* Connect */
+        for (var j = i + 1; j < pts.length; j++) {
+          var q = pts[j];
+          var dx = p.x - q.x, dy = p.y - q.y;
+          var d  = Math.sqrt(dx*dx + dy*dy);
+          if (d < 110) {
+            ctx.beginPath();
+            ctx.moveTo(p.x, p.y);
+            ctx.lineTo(q.x, q.y);
+            ctx.strokeStyle = 'rgba(74,240,196,' + ((1-d/110)*0.07) + ')';
+            ctx.lineWidth   = 0.5;
+            ctx.stroke();
+          }
+        }
+
+        var col = p.hue >= 0
+          ? 'hsla('+p.hue+',75%,78%,'+alpha+')'
+          : 'rgba(255,255,255,'+alpha+')';
+
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, r, 0, Math.PI*2);
+        ctx.fillStyle = col;
+        ctx.fill();
+      }
+
+      requestAnimationFrame(drawBg);
+    }
+
+    drawBg();
+  })();
+
+})();
+/* ════════════════════════════════════════
+   ROCKET LOADER — Full Interactive
+════════════════════════════════════════ */
+(function () {
+
+  var wrap        = document.getElementById('rl-wrap');
+  var canvas      = document.getElementById('rl-canvas');
+  var barFill     = document.getElementById('rl-bar-fill');
+  var barMsg      = document.getElementById('rl-bar-msg');
+  var barPct      = document.getElementById('rl-bar-pct');
+  var statusDot   = document.getElementById('rl-status-dot');
+  var statusText  = document.getElementById('rl-status-text');
+  var altFill     = document.getElementById('rl-alt-fill');
+  var altMarker   = document.getElementById('rl-alt-marker');
+  var altVal      = document.getElementById('rl-alt-val');
+  var velFill     = document.getElementById('rl-vel-fill');
+  var velMarker   = document.getElementById('rl-vel-marker');
+  var velVal      = document.getElementById('rl-vel-val');
+  var statSpeed   = document.getElementById('rl-stat-speed');
+  var statTemp    = document.getElementById('rl-stat-temp');
+  var statFuel    = document.getElementById('rl-stat-fuel');
+  var quoteOverlay = document.getElementById('rl-quote-overlay');
+  var quoteText   = document.getElementById('rl-quote-text');
+  var quoteAuthor = document.getElementById('rl-quote-author');
+  var quoteBtn    = document.getElementById('rl-quote-btn');
+
+  if (!wrap || !canvas) return;
+
+  document.body.classList.add('rl-loading');
+
+  /* ══════════════════════════════════════
+     QUOTES
+  ══════════════════════════════════════ */
+  var quotes = [
+    {
+      text  : '"The sky is not the limit — for those who dare to reach the cloud, it is only the beginning."',
+      author: '— Raushan Kumar'
+    },
+    {
+      text  : '"Every great engineer was once a student who refused to stop learning."',
+      author: '— Unknown'
+    },
+    {
+      text  : '"Build things that matter. Ship things that last. Dream bigger than the code you write."',
+      author: '— Developer Wisdom'
+    },
+    {
+      text  : '"The difference between ordinary and extraordinary is that little extra push — like a rocket breaking through clouds."',
+      author: '— Unknown'
+    },
+    {
+      text  : '"Your potential is infinite. Your code is just the beginning of what you will create."',
+      author: '— Engineering Spirit'
+    }
+  ];
+
+  var randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+
+  /* ══════════════════════════════════════
+     CANVAS SETUP
+  ══════════════════════════════════════ */
+  var ctx = canvas.getContext('2d');
+  var W, H;
+
+  function resize() {
+    W = canvas.width  = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+
+  resize();
+  window.addEventListener('resize', resize);
+
+  /* ══════════════════════════════════════
+     STARS
+  ══════════════════════════════════════ */
+  var stars = [];
+
+  function initStars() {
+    stars = [];
+    for (var i = 0; i < 320; i++) {
+      stars.push({
+        x     : Math.random() * W,
+        y     : Math.random() * H,
+        r     : Math.random() * 1.6 + 0.2,
+        alpha : Math.random() * 0.7 + 0.15,
+        speed : Math.random() * 0.3 + 0.05,
+        twinkle: Math.random() * Math.PI * 2,
+        twinkleSpeed: 0.015 + Math.random() * 0.03,
+        hue   : Math.random() > 0.82 ? 160 + Math.random() * 60 : -1,
+        layer : Math.floor(Math.random() * 3)
+      });
+    }
+  }
+
+  initStars();
+
+  /* ══════════════════════════════════════
+     CLOUDS
+  ══════════════════════════════════════ */
+  var clouds = [];
+
+  function initClouds() {
+    clouds = [];
+    var cloudData = [
+      { x: 0.15, y: 0.25, w: 280, h: 80,  speed: 0.18, alpha: 0.55 },
+      { x: 0.55, y: 0.20, w: 340, h: 90,  speed: 0.12, alpha: 0.5  },
+      { x: 0.80, y: 0.32, w: 220, h: 70,  speed: 0.22, alpha: 0.45 },
+      { x: 0.30, y: 0.42, w: 300, h: 85,  speed: 0.15, alpha: 0.52 },
+      { x: 0.65, y: 0.50, w: 260, h: 75,  speed: 0.19, alpha: 0.48 },
+      { x: 0.10, y: 0.60, w: 320, h: 88,  speed: 0.14, alpha: 0.50 },
+      { x: 0.75, y: 0.68, w: 290, h: 82,  speed: 0.20, alpha: 0.46 },
+      { x: 0.40, y: 0.75, w: 350, h: 95,  speed: 0.11, alpha: 0.55 }
+    ];
+    cloudData.forEach(function (d) {
+      clouds.push({
+        x    : d.x * W,
+        y    : d.y * H,
+        w    : d.w, h: d.h,
+        speed: d.speed,
+        alpha: d.alpha,
+        baseAlpha: d.alpha,
+        drift: Math.random() * Math.PI * 2,
+        driftSpeed: 0.003 + Math.random() * 0.004,
+        broken: false,
+        breakProgress: 0
+      });
+    });
+  }
+
+  initClouds();
+
+  /* ══════════════════════════════════════
+     ROCKET
+  ══════════════════════════════════════ */
+  var rocket = {
+    x       : 0,
+    y       : 0,
+    targetY : 0,
+    velY    : 0,
+    scale   : 1,
+    trail   : [],
+    exhaust : [],
+    shake   : 0,
+    launched: false,
+    speed   : 0,
+    cloudBreak: false
+  };
+
+  function initRocket() {
+    rocket.x        = W / 2;
+    rocket.y        = H + 120;
+    rocket.targetY  = H * 0.55;
+    rocket.velY     = 0;
+    rocket.launched = false;
+    rocket.speed    = 0;
+    rocket.shake    = 0;
+    rocket.trail    = [];
+    rocket.exhaust  = [];
+  }
+
+  initRocket();
+
+  /* ══════════════════════════════════════
+     NEBULAE (background atmosphere)
+  ══════════════════════════════════════ */
+  function drawAtmosphere() {
+    /* Deep space gradient */
+    var bg = ctx.createRadialGradient(W*0.5, H*0.3, 0, W*0.5, H*0.5, Math.max(W,H)*0.9);
+    bg.addColorStop(0,   '#0a1020');
+    bg.addColorStop(0.35,'#060c18');
+    bg.addColorStop(0.7, '#040810');
+    bg.addColorStop(1,   '#020406');
+    ctx.fillStyle = bg;
+    ctx.fillRect(0, 0, W, H);
+
+    /* Subtle nebula glow */
+    var neb1 = ctx.createRadialGradient(W*0.2, H*0.3, 0, W*0.2, H*0.3, W*0.4);
+    neb1.addColorStop(0,   'rgba(74,240,196,0.03)');
+    neb1.addColorStop(0.5, 'rgba(59,130,246,0.02)');
+    neb1.addColorStop(1,   'transparent');
+    ctx.fillStyle = neb1;
+    ctx.fillRect(0, 0, W, H);
+
+    var neb2 = ctx.createRadialGradient(W*0.8, H*0.6, 0, W*0.8, H*0.6, W*0.45);
+    neb2.addColorStop(0,   'rgba(167,139,250,0.04)');
+    neb2.addColorStop(0.5, 'rgba(59,130,246,0.02)');
+    neb2.addColorStop(1,   'transparent');
+    ctx.fillStyle = neb2;
+    ctx.fillRect(0, 0, W, H);
+  }
+
+  /* ══════════════════════════════════════
+     DRAW STARS
+  ══════════════════════════════════════ */
+  function drawStars(progress) {
+    /* Stars move upward as rocket launches */
+    var starDrift = progress > 20 ? (progress - 20) * 0.4 : 0;
+
+    stars.forEach(function (s) {
+      s.twinkle += s.twinkleSpeed;
+      var tw    = 0.5 + 0.5 * Math.sin(s.twinkle);
+      var alpha = s.alpha * (0.55 + 0.45 * tw);
+      var r     = s.r * (0.8 + 0.3 * tw);
+
+      /* Parallax scroll — faster layers move more */
+      var sy = (s.y - starDrift * (s.layer + 1) * 0.6) % H;
+      if (sy < 0) sy += H;
+
+      var col = s.hue >= 0
+        ? 'hsla(' + s.hue + ',75%,85%,' + alpha + ')'
+        : 'rgba(255,255,255,' + alpha + ')';
+
+      /* Sparkle on bigger stars */
+      if (r > 1.3) {
+        ctx.save();
+        ctx.globalAlpha = alpha * 0.35;
+        ctx.strokeStyle = col;
+        ctx.lineWidth   = r * 0.4;
+        ctx.beginPath();
+        ctx.moveTo(s.x - r*2.5, sy); ctx.lineTo(s.x + r*2.5, sy);
+        ctx.moveTo(s.x, sy - r*2.5); ctx.lineTo(s.x, sy + r*2.5);
+        ctx.stroke();
+        ctx.restore();
+      }
+
+      ctx.beginPath();
+      ctx.arc(s.x, sy, r, 0, Math.PI * 2);
+      ctx.fillStyle = col;
+      ctx.fill();
+    });
+  }
+
+  /* ══════════════════════════════════════
+     DRAW CLOUD
+  ══════════════════════════════════════ */
+  function drawCloud(c, t) {
+    ctx.save();
+
+    var alpha = c.alpha;
+    if (c.broken) {
+      c.breakProgress = Math.min(c.breakProgress + 0.018, 1);
+      alpha = c.baseAlpha * (1 - c.breakProgress);
+    }
+
+    if (alpha <= 0.01) { ctx.restore(); return; }
+
+    /* Drift */
+    c.drift += c.driftSpeed;
+    var cx = c.x + Math.cos(c.drift) * 8;
+    var cy = c.y + Math.sin(c.drift * 0.7) * 5;
+
+    /* Break apart */
+    var bx = c.broken ? (cx < W/2 ? -c.breakProgress * 60 : c.breakProgress * 60) : 0;
+    var by = c.broken ? -c.breakProgress * 30 : 0;
+
+    ctx.globalAlpha = alpha;
+
+    /* Cloud body using ellipses */
+    var grad = ctx.createRadialGradient(cx + bx, cy + by, 0, cx + bx, cy + by, c.w * 0.6);
+    grad.addColorStop(0,   'rgba(200,220,240,0.9)');
+    grad.addColorStop(0.4, 'rgba(180,200,225,0.7)');
+    grad.addColorStop(0.8, 'rgba(150,170,200,0.4)');
+    grad.addColorStop(1,   'transparent');
+
+    ctx.beginPath();
+    ctx.ellipse(cx + bx, cy + by, c.w * 0.5, c.h * 0.45, 0, 0, Math.PI * 2);
+    ctx.fillStyle = grad;
+    ctx.fill();
+
+    /* Cloud puffs */
+    var puffs = [
+      { dx: -c.w*0.22, dy: -c.h*0.2, r: c.h*0.38 },
+      { dx:  c.w*0.0,  dy: -c.h*0.3, r: c.h*0.42 },
+      { dx:  c.w*0.22, dy: -c.h*0.18,r: c.h*0.36 },
+      { dx: -c.w*0.12, dy:  c.h*0.05,r: c.h*0.32 },
+      { dx:  c.w*0.14, dy:  c.h*0.05,r: c.h*0.30 }
+    ];
+
+    puffs.forEach(function (p) {
+      var pg = ctx.createRadialGradient(
+        cx + bx + p.dx, cy + by + p.dy, 0,
+        cx + bx + p.dx, cy + by + p.dy, p.r
+      );
+      pg.addColorStop(0,   'rgba(220,235,248,0.85)');
+      pg.addColorStop(0.6, 'rgba(190,210,235,0.55)');
+      pg.addColorStop(1,   'transparent');
+      ctx.beginPath();
+      ctx.arc(cx + bx + p.dx, cy + by + p.dy, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = pg;
+      ctx.fill();
+    });
+
+    ctx.restore();
+  }
+
+  /* ══════════════════════════════════════
+     DRAW ROCKET
+  ══════════════════════════════════════ */
+  function drawRocket(rx, ry, scale, shakeX) {
+    ctx.save();
+    ctx.translate(rx + shakeX, ry);
+    ctx.scale(scale, scale);
+
+    var r = 22; /* base unit */
+
+    /* ── Exhaust plume ── */
+    var plumeLen = 80 + Math.random() * 40;
+    var plume = ctx.createLinearGradient(0, r, 0, r + plumeLen);
+    plume.addColorStop(0,   'rgba(255,200,80,0.95)');
+    plume.addColorStop(0.2, 'rgba(255,120,30,0.8)');
+    plume.addColorStop(0.5, 'rgba(255,60,0,0.5)');
+    plume.addColorStop(0.8, 'rgba(200,30,0,0.2)');
+    plume.addColorStop(1,   'transparent');
+
+    ctx.beginPath();
+    ctx.moveTo(-r*0.35, r*0.8);
+    ctx.quadraticCurveTo(-r*0.6 + Math.random()*8-4, r + plumeLen*0.5, 0, r + plumeLen);
+    ctx.quadraticCurveTo( r*0.6 + Math.random()*8-4, r + plumeLen*0.5, r*0.35, r*0.8);
+    ctx.fillStyle = plume;
+    ctx.fill();
+
+    /* Inner plume core */
+    var core = ctx.createLinearGradient(0, r, 0, r + plumeLen*0.4);
+    core.addColorStop(0,   'rgba(255,255,200,0.95)');
+    core.addColorStop(0.5, 'rgba(255,220,80,0.6)');
+    core.addColorStop(1,   'transparent');
+    ctx.beginPath();
+    ctx.moveTo(-r*0.15, r*0.85);
+    ctx.quadraticCurveTo(0, r + plumeLen*0.25, 0, r + plumeLen*0.4);
+    ctx.quadraticCurveTo(0, r + plumeLen*0.25, r*0.15, r*0.85);
+    ctx.fillStyle = core;
+    ctx.fill();
+
+    /* ── Fins ── */
+    ctx.beginPath();
+    ctx.moveTo(-r*0.7, r*0.5);
+    ctx.lineTo(-r*1.1, r);
+    ctx.lineTo(-r*0.35, r*0.8);
+    ctx.closePath();
+    ctx.fillStyle = '#c0392b';
+    ctx.fill();
+
+    ctx.beginPath();
+    ctx.moveTo(r*0.7, r*0.5);
+    ctx.lineTo(r*1.1, r);
+    ctx.lineTo(r*0.35, r*0.8);
+    ctx.closePath();
+    ctx.fillStyle = '#c0392b';
+    ctx.fill();
+
+    /* ── Body ── */
+    var bodyGrad = ctx.createLinearGradient(-r*0.7, -r*1.5, r*0.7, r);
+    bodyGrad.addColorStop(0,   '#f0f4ff');
+    bodyGrad.addColorStop(0.3, '#d0d8f0');
+    bodyGrad.addColorStop(0.7, '#a0aac8');
+    bodyGrad.addColorStop(1,   '#707890');
+
+    ctx.beginPath();
+    ctx.moveTo(-r*0.55, r*0.8);
+    ctx.lineTo(-r*0.6,  r*0.2);
+    ctx.lineTo(-r*0.55, -r*0.8);
+    ctx.lineTo(-r*0.35, -r*1.4);
+    ctx.lineTo( r*0.35, -r*1.4);
+    ctx.lineTo( r*0.55, -r*0.8);
+    ctx.lineTo( r*0.6,   r*0.2);
+    ctx.lineTo( r*0.55,  r*0.8);
+    ctx.closePath();
+    ctx.fillStyle = bodyGrad;
+    ctx.fill();
+
+    /* Body highlight */
+    var bodyHL = ctx.createLinearGradient(-r*0.2, -r, r*0.2, r*0.5);
+    bodyHL.addColorStop(0,   'rgba(255,255,255,0.35)');
+    bodyHL.addColorStop(1,   'transparent');
+    ctx.beginPath();
+    ctx.moveTo(-r*0.18, r*0.7);
+    ctx.lineTo(-r*0.22, -r*0.6);
+    ctx.lineTo( r*0.22, -r*0.6);
+    ctx.lineTo( r*0.18,  r*0.7);
+    ctx.closePath();
+    ctx.fillStyle = bodyHL;
+    ctx.fill();
+
+    /* ── Nose cone ── */
+    var noseGrad = ctx.createLinearGradient(-r*0.35, -r*1.4, r*0.35, -r*2.6);
+    noseGrad.addColorStop(0,   '#e0e8ff');
+    noseGrad.addColorStop(0.4, '#4af0c4');
+    noseGrad.addColorStop(1,   '#1a9a7a');
+
+    ctx.beginPath();
+    ctx.moveTo(-r*0.35, -r*1.4);
+    ctx.quadraticCurveTo(-r*0.35, -r*2.0, 0, -r*2.6);
+    ctx.quadraticCurveTo( r*0.35, -r*2.0, r*0.35, -r*1.4);
+    ctx.closePath();
+    ctx.fillStyle = noseGrad;
+    ctx.fill();
+
+    /* Nose shine */
+    ctx.beginPath();
+    ctx.moveTo(-r*0.15, -r*1.45);
+    ctx.quadraticCurveTo(-r*0.18, -r*2.0, 0, -r*2.45);
+    ctx.quadraticCurveTo(-r*0.04, -r*1.95, -r*0.05, -r*1.45);
+    ctx.closePath();
+    ctx.fillStyle = 'rgba(255,255,255,0.4)';
+    ctx.fill();
+
+    /* ── Window ── */
+    var winGrad = ctx.createRadialGradient(-r*0.06, -r*0.65, 0, 0, -r*0.6, r*0.22);
+    winGrad.addColorStop(0,   '#7dd8ff');
+    winGrad.addColorStop(0.5, '#3a9ae8');
+    winGrad.addColorStop(1,   '#1a4a80');
+    ctx.beginPath();
+    ctx.arc(0, -r*0.6, r*0.22, 0, Math.PI*2);
+    ctx.fillStyle = winGrad;
+    ctx.fill();
+    /* Window rim */
+    ctx.beginPath();
+    ctx.arc(0, -r*0.6, r*0.22, 0, Math.PI*2);
+    ctx.strokeStyle = 'rgba(255,255,255,0.4)';
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+    /* Window shine */
+    ctx.beginPath();
+    ctx.arc(-r*0.07, -r*0.68, r*0.1, 0, Math.PI*2);
+    ctx.fillStyle = 'rgba(255,255,255,0.5)';
+    ctx.fill();
+
+    /* ── Glow around rocket ── */
+    var glow = ctx.createRadialGradient(0, 0, r*0.5, 0, 0, r*3);
+    glow.addColorStop(0,   'rgba(74,240,196,0.08)');
+    glow.addColorStop(0.5, 'rgba(59,130,246,0.04)');
+    glow.addColorStop(1,   'transparent');
+    ctx.beginPath();
+    ctx.arc(0, 0, r*3, 0, Math.PI*2);
+    ctx.fillStyle = glow;
+    ctx.fill();
+
+    ctx.restore();
+  }
+
+  /* ══════════════════════════════════════
+     EXHAUST PARTICLES
+  ══════════════════════════════════════ */
+  var exhaustParticles = [];
+
+  function spawnExhaust(rx, ry) {
+    for (var i = 0; i < 4; i++) {
+      exhaustParticles.push({
+        x    : rx + (Math.random() - 0.5) * 14,
+        y    : ry + 22,
+        vx   : (Math.random() - 0.5) * 2.5,
+        vy   : 3 + Math.random() * 4,
+        r    : 2 + Math.random() * 5,
+        alpha: 0.8 + Math.random() * 0.2,
+        hue  : Math.random() > 0.5 ? 35 : 15,
+        sat  : 90 + Math.random() * 10
+      });
+    }
+  }
+
+  function drawExhaust() {
+    exhaustParticles = exhaustParticles.filter(function (p) {
+      p.x     += p.vx;
+      p.y     += p.vy;
+      p.r     *= 0.94;
+      p.alpha *= 0.88;
+      if (p.alpha < 0.02 || p.r < 0.3) return false;
+
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = 'hsla(' + p.hue + ',' + p.sat + '%,60%,' + p.alpha + ')';
+      ctx.fill();
+      return true;
+    });
+  }
+
+  /* ══════════════════════════════════════
+     SHOCK WAVE (on cloud break)
+  ══════════════════════════════════════ */
+  var shockWaves = [];
+
+  function spawnShockWave(x, y) {
+    shockWaves.push({ x: x, y: y, r: 10, alpha: 0.8, maxR: 180 });
+  }
+
+  function drawShockWaves() {
+    shockWaves = shockWaves.filter(function (sw) {
+      sw.r     += 8;
+      sw.alpha -= 0.025;
+      if (sw.alpha <= 0) return false;
+
+      ctx.beginPath();
+      ctx.arc(sw.x, sw.y, sw.r, 0, Math.PI * 2);
+      ctx.strokeStyle = 'rgba(74,240,196,' + sw.alpha + ')';
+      ctx.lineWidth   = 2.5;
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.arc(sw.x, sw.y, sw.r * 0.75, 0, Math.PI * 2);
+      ctx.strokeStyle = 'rgba(255,255,255,' + (sw.alpha * 0.4) + ')';
+      ctx.lineWidth   = 1;
+      ctx.stroke();
+      return true;
+    });
+  }
+
+  /* ══════════════════════════════════════
+     PROGRESS + STATS
+  ══════════════════════════════════════ */
+  var currentPct = 0;
+  var targetPct  = 0;
+  var done       = false;
+
+  var phases = [
+    { pct: 8,   msg: 'Fueling engines...',         status: 'PRE-LAUNCH',   statusColor: '#f59e0b' },
+    { pct: 18,  msg: 'Systems check...',            status: 'T-MINUS 10',   statusColor: '#f59e0b' },
+    { pct: 30,  msg: 'Ignition sequence started...', status: 'IGNITION',   statusColor: '#ef4444' },
+    { pct: 45,  msg: 'Main engines at full thrust...', status: 'LIFTOFF!',  statusColor: '#4af0c4' },
+    { pct: 58,  msg: 'Clearing launch tower...',    status: 'ASCENDING',    statusColor: '#4af0c4' },
+    { pct: 70,  msg: 'Entering cloud layer...',     status: 'MAX-Q',        statusColor: '#3b82f6' },
+    { pct: 82,  msg: 'Breaking through clouds...',  status: 'SUPERSONIC',   statusColor: '#a78bfa' },
+    { pct: 92,  msg: 'Entering upper atmosphere...', status: 'MECO',        statusColor: '#a78bfa' },
+    { pct: 100, msg: 'Orbit achieved. Welcome! 🚀', status: 'ORBIT',        statusColor: '#4af0c4' }
+  ];
+
+  var phaseIndex = 0;
+
+  function updateHUD(pct) {
+    /* Bar */
+    if (barFill) barFill.style.width = pct + '%';
+    if (barPct)  barPct.textContent  = Math.round(pct) + '%';
+
+    /* Altitude */
+    var altKm = Math.round(pct * 4.2);
+    if (altFill)   altFill.style.height   = pct + '%';
+    if (altMarker) altMarker.style.bottom  = pct + '%';
+    if (altVal)    altVal.textContent      = altKm + ' km';
+
+    /* Velocity */
+    var vel = Math.round(pct * 78);
+    var velPct = Math.min(pct * 1.1, 100);
+    if (velFill)   velFill.style.height   = velPct + '%';
+    if (velMarker) velMarker.style.bottom  = velPct + '%';
+    if (velVal)    velVal.textContent      = vel + ' m/s';
+
+    /* Stats */
+    if (statSpeed) {
+      statSpeed.textContent = (pct * 0.078).toFixed(2);
+      statSpeed.style.color = pct > 50 ? '#4af0c4' : '#e8eaf0';
+    }
+    if (statTemp) {
+      var temp = Math.round(288 + pct * 3.5);
+      statTemp.textContent = temp;
+      statTemp.style.color = pct > 70 ? '#ef4444' : pct > 40 ? '#f59e0b' : '#e8eaf0';
+    }
+    if (statFuel) {
+      var fuel = Math.max(0, Math.round(100 - pct * 0.88));
+      statFuel.textContent = fuel;
+      statFuel.style.color = fuel < 20 ? '#ef4444' : fuel < 50 ? '#f59e0b' : '#e8eaf0';
+    }
+
+    /* Phase update */
+    while (phaseIndex < phases.length - 1 && pct >= phases[phaseIndex + 1].pct) {
+      phaseIndex++;
+    }
+    var phase = phases[phaseIndex];
+    if (barMsg)     barMsg.textContent     = phase.msg;
+    if (statusText) {
+      statusText.textContent = phase.status;
+      statusText.style.color = phase.statusColor;
+    }
+    if (statusDot) {
+      statusDot.style.background  = phase.statusColor;
+      statusDot.style.boxShadow   = '0 0 8px ' + phase.statusColor;
+    }
+
+    /* Cloud breaking at 70% */
+    if (pct >= 70 && !clouds[0].broken) {
+      clouds.forEach(function (c) { c.broken = true; });
+      spawnShockWave(W / 2, rocket.y);
+      spawnShockWave(W / 2, rocket.y + 40);
+    }
+
+    /* Rocket position */
+    var rocketProgress = Math.max(0, (pct - 15) / 85);
+    var easedProgress  = 1 - Math.pow(1 - rocketProgress, 2.5);
+    rocket.y = H + 120 - easedProgress * (H + 280);
+    rocket.scale = 1 - easedProgress * 0.22;
+    rocket.shake = pct > 25 && pct < 85 ? (Math.random() - 0.5) * (pct > 60 ? 5 : 2.5) : 0;
+
+    if (pct > 20) {
+      spawnExhaust(W / 2, rocket.y);
+    }
+  }
+
+  /* ══════════════════════════════════════
+     PROGRESS TICKER
+  ══════════════════════════════════════ */
+  function tickProgress() {
+    if (done) return;
+    if (currentPct < targetPct) {
+      currentPct = Math.min(currentPct + 0.55, targetPct);
+      updateHUD(currentPct);
+    }
+    requestAnimationFrame(tickProgress);
+  }
+
+  requestAnimationFrame(tickProgress);
+
+  /* Timeline */
+  var timeline = [
+    { time: 400,  pct: 8   },
+    { time: 1200, pct: 18  },
+    { time: 2100, pct: 30  },
+    { time: 3000, pct: 45  },
+    { time: 3900, pct: 58  },
+    { time: 4800, pct: 70  },
+    { time: 5600, pct: 82  },
+    { time: 6400, pct: 92  },
+    { time: 7200, pct: 100 }
+  ];
+
+  timeline.forEach(function (step) {
+    setTimeout(function () { targetPct = step.pct; }, step.time);
+  });
+
+  /* ══════════════════════════════════════
+     SHOW QUOTE
+  ══════════════════════════════════════ */
+  function showQuote() {
+    done = true;
+    if (quoteText)   quoteText.textContent   = randomQuote.text;
+    if (quoteAuthor) quoteAuthor.textContent  = randomQuote.author;
+
+    /* Typewriter effect on quote */
+    var fullText = randomQuote.text;
+    var charIndex = 0;
+    if (quoteText) quoteText.textContent = '';
+
+    function typeChar() {
+      if (charIndex < fullText.length) {
+        quoteText.textContent += fullText[charIndex];
+        charIndex++;
+        setTimeout(typeChar, 22);
+      }
+    }
+
+    if (quoteOverlay) {
+      quoteOverlay.classList.add('rl-quote-show');
+      setTimeout(typeChar, 400);
+    }
+  }
+
+  setTimeout(showQuote, 7800);
+
+  /* Enter Portfolio button */
+  if (quoteBtn) {
+    quoteBtn.addEventListener('click', function () {
+      wrap.classList.add('rl-exit');
+      document.body.classList.remove('rl-loading');
+      setTimeout(function () {
+        if (wrap && wrap.parentNode) {
+          wrap.parentNode.removeChild(wrap);
+        }
+      }, 1300);
+    });
+  }
+
+  /* ══════════════════════════════════════
+     MAIN DRAW LOOP
+  ══════════════════════════════════════ */
+  var frameT = 0;
+
+  function draw() {
+    if (!wrap.parentNode) return;
+    ctx.clearRect(0, 0, W, H);
+
+    drawAtmosphere();
+    drawStars(currentPct);
+
+    /* Draw clouds behind rocket */
+    clouds.forEach(function (c) { drawCloud(c, frameT); });
+
+    /* Exhaust behind rocket body */
+    drawExhaust();
+
+    /* Rocket */
+    if (rocket.y < H + 100) {
+      drawRocket(W / 2, rocket.y, rocket.scale, rocket.shake);
+    }
+
+    /* Shock waves */
+    drawShockWaves();
+
+    frameT++;
+    requestAnimationFrame(draw);
+  }
+
+  draw();
+
+})();
